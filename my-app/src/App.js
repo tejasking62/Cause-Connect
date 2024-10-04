@@ -1,16 +1,29 @@
 // src/App.js
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Nonprofits from './Nonprofits';  
+import Leaders from './Leaders';        
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to My React App</h1>
-        <p>This is a simple skeleton for a React application.</p>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li><Link to="/nonprofits">Nonprofits</Link></li>
+            <li><Link to="/leaders">Leaders</Link></li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/nonprofits" element={<Nonprofits />} />  {/* Nonprofits route */}
+          <Route path="/leaders" element={<Leaders />} />        {/* Leaders route */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
 
