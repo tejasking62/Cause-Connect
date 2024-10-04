@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import Nonprofits from './Nonprofits';
-import Leaders from './Leaders';
+import RoleSelection from './RoleSelection';
+import LoginSignupForm from './LoginSignupForm';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />  {/* Home route */}
-        <Route path="/nonprofits" element={<Nonprofits />} />  {/* Nonprofits route */}
-        <Route path="/leaders" element={<Leaders />} />  {/* Leaders route */}
+        <Route path="/" element={<Home />} />  {/* Home page */}
+        <Route path="/role-selection" element={<RoleSelection />} />  {/* Role selection page */}
+        <Route path="/login-signup" element={<LoginSignupForm />} />  {/* Login/Sign-up form page */}
       </Routes>
     </Router>
   );
