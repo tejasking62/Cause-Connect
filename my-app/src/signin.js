@@ -1,12 +1,12 @@
 import React from 'react';
 
-function Leaders() {
+function Signin() {
   return (
     <div>
-      <h1>Sign In </h1>
-      <p>Meet the leaders who are making an impact in the nonprofit space.</p>
+      <h1>Sign In Page</h1>
+      <p>Meet the Sign in.</p>
     </div>
   );
 }
 
-export default Leaders;
+export default Signin;
