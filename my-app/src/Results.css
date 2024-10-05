@@ -1,0 +1,43 @@
+/* MatchCard.css */
+
+.match-card {
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.375rem; /* rounded-md */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* shadow-md */
+    padding: 1rem; /* p-4 */
+    margin-bottom: 1rem; /* mb-4 */
+    background-color: #ffffff; /* bg-white */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .match-info {
+    flex-grow: 1; /* Flex-grow for the nonprofit info */
+  }
+
+  .logo {
+    height: 100px; /* Adjust this value to make the logo smaller */
+    width: auto; /* Maintain aspect ratio */
+  }
+  
+  .match-percentage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1rem; /* ml-4 */
+  }
+  
+  .percentage-circle {
+    font-size: 2rem; /* Adjust size as needed */
+    font-weight: bold; /* font-bold */
+    color: #4ade80; /* text-green-700 */
+    width: 4rem; /* w-16 */
+    height: 4rem; /* h-16 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Circle */
+    border: 2px solid #4ade80; /* border-green-700 */
+  }
+  
