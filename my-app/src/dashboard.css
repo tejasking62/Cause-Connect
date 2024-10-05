@@ -1,0 +1,67 @@
+/* Home.css */
+body {
+  font-family: 'Roboto', sans-serif; /* Default font for the body */
+  margin: 0;
+  padding: 0;
+  background-color: #8d9fbb;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start (left) */
+  justify-content: flex-start; /* Align content to the start (top) */
+  min-height: 100vh; /* Full viewport height */
+  padding: 40px; /* Padding around the container */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif; /* Updated font for the title */
+  font-size: 5em; /* Increased font size for a bigger title */
+  margin-bottom: 15px;
+  color: #37474f;
+  letter-spacing: 2px; /* Increased letter spacing */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  font-size: 1.3em;
+  margin-bottom: 30px;
+  color: #546e7a;
+  line-height: 1.6;
+  max-width: 700px;
+  text-align: left;
+}
+
+.btn {
+  background-color: #4fc3f7;
+  color: #37474f;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin: 15px 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #29b6f6;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+  position: absolute; /* Use absolute positioning for button container */
+  bottom: 20px; /* Distance from the bottom */
+  left: 20px; /* Distance from the left */
+}
+

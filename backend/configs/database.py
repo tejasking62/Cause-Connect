@@ -3,26 +3,30 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 import os
+import sys
 
+load_dotenv()  # This loads environment variables from a .env file
 
-load_dotenv()  # This loads the variables from .env into the environment
+# Use SQLite database
+DATABASE_URL = "sqlite:///./test.db"  # This will create a file named test.db in your current directory
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Configure the engine with pre-ping to check connection health
+# Note: check_same_thread=False is needed for SQLite when used with Flask
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-
-# pool_pre_ping : This will make sure that the connection is still alive before using it.[ so cool btw]
-#
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
-
+# Create a session maker for handling database sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# Create a base class for model classes to inherit from
 Base = declarative_base()
 
-
-# dependency
+# Dependency to get the database session in other parts of the app
 def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+def init_db():
+    Base.metadata.create_all(bind=engine)

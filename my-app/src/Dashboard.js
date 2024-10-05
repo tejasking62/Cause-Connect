@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
-  const { role } = location.state; 
+  const { role } = location.state;
 
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
       {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
     </div>
   );
 }
 
+// Non-Profit Form with matching questions
 const NonProfitForm = () => {
   const questions = [
     { label: 'What causes/social issues are you most passionate about?', type: 'text' },
@@ -23,7 +25,7 @@ const NonProfitForm = () => {
       options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
     {
-      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in behind-the-scenes work like program development, research, or administration?',
       type: 'select',
       options: ['Field-based', 'Behind-the-scenes'],
     },
@@ -47,7 +49,7 @@ const LeaderForm = () => {
       options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
     {
-      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in behind-the-scenes work like program development, research, or administration?',
       type: 'select',
       options: ['Field-based', 'Behind-the-scenes'],
     },
