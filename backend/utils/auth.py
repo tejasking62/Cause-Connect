@@ -18,5 +18,8 @@ SECRET_KEY = "ofYNA3mE1p2GDLetPU3tvuemWPXsBa8R"
 def hash(password: str):
     return password_hasher.hash(password)
 
+def verify_password(plain_password: str, hashed_password: str):
+    return password_hasher.verify(hashed_password, plain_password)
+
 
 
