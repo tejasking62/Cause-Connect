@@ -1,61 +1,48 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import Axios
 import './login.css'; // Import the CSS file
 
 function LoginSignupForm() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { action, role } = location.state || {};
+  const { action, role } = location.state || { action: 'login', role: 'user' }; // Default values
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState(''); // Add name state for signup
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`${action} as a ${role} with`, { email, password });
 
-    if (action === 'signup' && password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    // Retrieve stored user from local storage
+    const storedUser = JSON.parse(localStorage.getItem('user'));
 
-    try {
-      if (action === 'login') {
-        const response = await axios.post('/login', {
-          username: email,
-          password: password,
-        });
-
-        if (response.status === 200) {
-          navigate('/dashboard', { state: { role } });
-        }
-      } else if (action === 'signup') {
-        const response = await axios.post('/signup', {
-          password: password,
-          email: email,
-          is_nonprofit: role === 'nonprofit', // Assuming role could be 'nonprofit'
-          nonprofit: {
-            // Add any necessary nonprofit data here if role is 'nonprofit'
-            title: 'Nonprofit Title',
-            location: 'Nonprofit Location',
-            sectors: ['Education', 'Health'], // Example sectors
-          },
-        });
-
-        if (response.status === 201) {
-          alert("Sign up successful! Please log in.");
-          navigate('/', { state: { action: 'login' } });
-        }
-      }
-    } catch (error) {
-      if (error.response && error.response.data) {
-        alert(error.response.data.error);
+    if (action === 'login') {
+      // Check if credentials match
+      if (storedUser && email === storedUser.email && password === storedUser.password) {
+        alert("Login successful!");
+        navigate('/dashboard', { state: { role: storedUser.role } });
       } else {
-        alert("An error occurred. Please try again.");
+        alert("Invalid email or password.");
       }
+    } else if (action === 'signup') {
+      // Validate password confirmation
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const newUser = {
+        email,
+        password,
+        role // Assuming role comes from state
+      };
+
+      // Store new user in local storage
+      localStorage.setItem('user', JSON.stringify(newUser));
+      alert("Sign up successful! Please log in.");
+      navigate('/', { state: { action: 'login' } });
     }
   };
 

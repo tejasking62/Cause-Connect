@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 function Dashboard() {
   const location = useLocation();
-  const { role } = location.state; 
+  const role = location.state?.role || 'default'; 
 
   return (
     <div>
