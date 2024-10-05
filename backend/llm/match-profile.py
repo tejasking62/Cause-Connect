@@ -1,7 +1,16 @@
+import os
 from openai import OpenAI
-
-client = OpenAI(api_key=('sk-proj-OsP--RPm2UHOwGW6oQANsgt6SEA'))
 from sentence_transformers import SentenceTransformer, util
+
+# Load API key from environment variable
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+
+# Initialize OpenAI client
+
+client = OpenAI(api_key=api_key)
+
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 # Set your OpenAI API key
