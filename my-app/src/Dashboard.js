@@ -4,7 +4,7 @@ import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
-  const { role } = location.state; // Retrieve the user's role from state
+  const role = location.state?.role || 'default'; // Retrieve the user's role from state
 
   return (
     <div className="dashboard-container">
