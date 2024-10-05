@@ -13,35 +13,51 @@ function Dashboard() {
   );
 }
 
-// Non-Profit Form with general questions
+// Non-Profit Form with matching questions
 const NonProfitForm = () => {
   const questions = [
-    { label: 'What motivates you to work in the non-profit sector?', type: 'text' },
-    { label: 'Describe any volunteer experiences you have had.', type: 'text' },
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
     {
-      label: 'What skills do you possess that can benefit a non-profit organization?',
+      label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
       type: 'select',
-      options: ['Fundraising', 'Marketing', 'Management', 'Community Outreach', 'Public Speaking'],
+      options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
-    { label: 'How do you measure the success of a non-profit initiative?', type: 'text' },
     {
-      label: 'What challenges do you think non-profits face today?',
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
       type: 'select',
-      options: ['Funding', 'Volunteer Retention', 'Public Awareness', 'Government Regulations', 'Competition'],
+      options: ['Field-based', 'Behind-the-scenes'],
+    },
+    {
+      label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?',
+      type: 'select',
+      options: ['Small, community-based', 'Larger, national/global'],
     },
   ];
 
   return <Questionnaire questions={questions} />;
 };
 
-// Leader Form with general questions
+// Leader Form with matching questions
 const LeaderForm = () => {
   const questions = [
-    { label: 'What is your leadership philosophy?', type: 'text' },
-    { label: 'Describe a successful project you led and what made it successful.', type: 'text' },
-    { label: 'How do you handle team conflicts?', type: 'text' },
-    { label: 'What strategies do you use to motivate your team?', type: 'text' },
-    { label: 'How do you envision fostering growth within an organization?', type: 'text' },
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
+    {
+      label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
+      type: 'select',
+      options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
+    },
+    {
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
+      type: 'select',
+      options: ['Field-based', 'Behind-the-scenes'],
+    },
+    {
+      label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?',
+      type: 'select',
+      options: ['Small, community-based', 'Larger, national/global'],
+    },
   ];
 
   return <Questionnaire questions={questions} />;
