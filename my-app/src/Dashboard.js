@@ -4,7 +4,11 @@ import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
+<<<<<<< HEAD
   const role = location.state?.role || 'default'; // Retrieve the user's role from state
+=======
+  const { role } = location.state; 
+>>>>>>> tejas
 
   return (
     <div className="dashboard-container">
@@ -14,7 +18,6 @@ function Dashboard() {
   );
 }
 
-// Non-Profit Form with matching questions
 const NonProfitForm = () => {
   const questions = [
     { label: 'What causes/social issues are you most passionate about?', type: 'text' },
