@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import './dashboard.css';
 
+
 function Dashboard() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const location = useLocation();
+  const role = location.state?.role || 'default'; 
+
+  return (
+    <div>
+      <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
+      {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
+    </div>
+  );
+}
 
   const questions = [
     {

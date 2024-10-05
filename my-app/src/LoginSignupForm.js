@@ -5,24 +5,42 @@ import './login.css'; // Import the CSS file
 function LoginSignupForm() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { action, role } = location.state || {};
+  const { action, role } = location.state || { action: 'login', role: 'user' }; // Default values
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState(''); // Add name state for signup
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`${action} as a ${role} with`, { email, password });
 
-    if (action === 'signup' && password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    // Retrieve stored user from local storage
+    const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (action === 'login') {
-      navigate('/dashboard', { state: { role } });
+      // Check if credentials match
+      if (storedUser && email === storedUser.email && password === storedUser.password) {
+        alert("Login successful!");
+        navigate('/dashboard', { state: { role: storedUser.role } });
+      } else {
+        alert("Invalid email or password.");
+      }
     } else if (action === 'signup') {
+      // Validate password confirmation
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const newUser = {
+        email,
+        password,
+        role // Assuming role comes from state
+      };
+
+      // Store new user in local storage
+      localStorage.setItem('user', JSON.stringify(newUser));
       alert("Sign up successful! Please log in.");
       navigate('/', { state: { action: 'login' } });
     }
@@ -41,6 +59,17 @@ function LoginSignupForm() {
             required 
           />
         </div>
+        {action === 'signup' && (
+          <div className="form-group">
+            <label>Name:</label>
+            <input 
+              type="text" 
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
+              required 
+            />
+          </div>
+        )}
         <div className="form-group">
           <label>Password:</label>
           <input 
