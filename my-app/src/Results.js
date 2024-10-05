@@ -9,8 +9,8 @@ const MatchCard = ({ match }) => {
   return (
     <div className="match-card">
       <div className="match-info">
-        <h3 className="text-xl font-bold">{match.nonprofit_name}</h3>
-        <p className="text-gray-600">{match.location} / {match.category}</p>
+        <h2 className="text-xl font-bold">{match.nonprofit_name}</h2>
+        <h3 className="text-gray-600">{match.location} / {match.category}</h3>
         <p className="mt-2 text-gray-800">{match.nonprofit_summary}</p>
       </div>
       <div className="match-percentage">
@@ -42,7 +42,7 @@ export default function Results() {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <img src={logo} alt="Logo" className="logo" /> {/* Now using the CSS class */}
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Hey, here are your TOP MATCHES!
+          Hey {userName}, here are your TOP MATCHES!
         </h1>
       </div>
 
@@ -53,6 +53,7 @@ export default function Results() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="mb-4 p-3 border border-gray-300 rounded-md w-full md:w-1/3 mx-auto"
       />
+
       <div className="w-full">
         {resultsJSON
           .filter(match => 
