@@ -1,0 +1,57 @@
+/* MatchCard.css */
+
+.match-card {
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.7rem; /* rounded-md */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* shadow-md */
+    padding: 1rem; /* p-4 */
+    margin-bottom: 1rem; /* mb-4 */
+    background-color: #ffffff; /* bg-white */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .match-info {
+    flex-grow: 1; /* Flex-grow for the nonprofit info */
+  }
+
+  .logo {
+    height: 100px; /* Adjust this value to make the logo smaller */
+    width: auto; /* Maintain aspect ratio */
+  }
+  
+  .match-percentage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1rem; /* ml-4 */
+  }
+  
+  .percentage-circle {
+    font-size: 2.4rem; /* Adjust size as needed */
+    font-weight: bold; /* font-bold */
+    color: #000000; /* text color */
+    width: 6rem; /* w-16 */
+    height: 6rem; /* h-16 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Circle */
+    position: relative;
+    background: conic-gradient(#e3f9f4, #afffc9); /* Gradient */
+    padding: 7px;
+  }
+  
+  .percentage-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff; /* Inner background color */
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
