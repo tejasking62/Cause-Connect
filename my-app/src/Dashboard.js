@@ -1,271 +1,163 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // Use to get the user's info from login
+import { useLocation } from 'react-router-dom';
 
 function Dashboard() {
   const location = useLocation();
-  const { email } = location.state || {}; // Extract email from login state
+  const role = location.state?.role || 'default'; // Retrieve the user's role from state
 
-  // Define the state for form data
-  const [formData, setFormData] = useState({
-    "Causes or social issues candidate is most passionate about supporting": {
-      "Education and youth development": false,
-      "Healthcare and mental health": false,
-      "Environmental sustainability": false,
-      "Social justice and equity": false,
-      "Poverty alleviation and housing": false,
-      "Arts and culture": false
-    },
-    "Skills candidate is hoping to bring to the nonprofit": {
-      "Social media": false,
-      "Project management": false,
-      "Marketing": false,
-      "Technology": false,
-      "Human resources": false,
-      "Diversity, equity, inclusion": false,
-      "Other": false
-    },
-    "Why are you interested in serving on a non-profit board?": '',
-    "Have you served in any leadership role for 6 months or more?": '',
-    "Share your experience with board service": '',
-    "What size of non-profit are you most interested in?": '',
-    "Who is your employer": '',
-    "What is your role/occupation": '',
-    "Age": '',
-    "Choose how you identify yourself": '',
-    "Race/ethnicity": '',
-    "Dates candidate is available": {
-      "Monday": false,
-      "Tuesday": false,
-      "Wednesday": false,
-      "Thursday": false,
-      "Friday": false
-    },
-    "Times candidate is available": {
-      "10am-1pm": false,
-      "1pm-4pm": false,
-      "4pm-7pm": false
-    },
-    "Where are you located?": '',
-  });
+  return (
+    <div className="dashboard-container">
+      <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
+      {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
+    </div>
+  );
+}
 
-  const navigate = useNavigate();
+// Non-Profit Form with matching questions
+const NonProfitForm = () => {
+  const questions = [
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
+    {
+      label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
+      type: 'multi-select',
+      options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
+    },
+    {
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in behind-the-scenes work like program development, research, or administration?',
+      type: 'select',
+      options: ['Field-based', 'Behind-the-scenes'],
+    },
+    {
+      label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?',
+      type: 'select',
+      options: ['Small, community-based', 'Larger, national/global'],
+    },
+  ];
 
-  // Handle input changes (checkboxes and text)
+  return <Questionnaire questions={questions} />;
+};
+
+const LeaderForm = () => {
+  const questions = [
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
+    {
+      label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
+      type: 'multi-select',
+      options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
+    },
+    {
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in behind-the-scenes work like program development, research, or administration?',
+      type: 'select',
+      options: ['Field-based', 'Behind-the-scenes'],
+    },
+    {
+      label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?',
+      type: 'select',
+      options: ['Small, community-based', 'Larger, national/global'],
+    },
+  ];
+
+  return <Questionnaire questions={questions} />;
+};
+
+const Questionnaire = ({ questions }) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const [section, field] = name.split('.'); // For checkbox sections
+    setAnswers({
+      ...answers,
+      [currentQuestionIndex]: e.target.value,
+    });
+  };
 
-    if (type === 'checkbox') {
-      setFormData((prevData) => ({
-        ...prevData,
-        [section]: {
-          ...prevData[section],
-          [field]: checked,
-        },
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+  const handleMultiSelectChange = (e, option) => {
+    const currentAnswers = answers[currentQuestionIndex] || [];
+    const selected = e.target.checked;
+
+    if (selected && currentAnswers.length < 3) {
+      setAnswers({
+        ...answers,
+        [currentQuestionIndex]: [...currentAnswers, option],
+      });
+    } else if (!selected) {
+      setAnswers({
+        ...answers,
+        [currentQuestionIndex]: currentAnswers.filter(item => item !== option),
+      });
     }
   };
 
-  // Submit form data
-  const handleSubmit = async (e) => {
+  const handleNext = (e) => {
     e.preventDefault();
-
-    // Debug: Log formData before submitting
-    console.log("Submitting form with data:", formData);
-
-    try {
-      const response = await fetch('http://localhost:5000/api/leader-submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, formData }),
-      });
-
-      // Debug: Check raw response
-      console.log("Raw response:", response);
-
-      if (!response.ok) {
-        throw new Error('Failed to submit the form.');
-      }
-
-      const result = await response.json();
-      console.log('Form submitted successfully:', result);
-
-      navigate('/submission');
-    } catch (error) {
-      // Debug: Log error
-      console.error('Error submitting form:', error);
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      console.log('Form submitted with answers:', answers);
+      alert('Thank you for your submission!');
     }
+  };
+
+  const renderMultiSelect = (options) => {
+    const currentAnswers = answers[currentQuestionIndex] || [];
+
+    return (
+      <div>
+        {options.map((option, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              id={option}
+              name={option}
+              value={option}
+              checked={currentAnswers.includes(option)}
+              onChange={(e) => handleMultiSelectChange(e, option)}
+            />
+            <label htmlFor={option}>{option}</label>
+          </div>
+        ))}
+        {currentAnswers.length >= 3 && (
+          <p style={{ color: 'red' }}>You can only select up to 3 options.</p>
+        )}
+      </div>
+    );
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Fill out the following information:</h1>
-
-      {/* Causes section */}
-      <h2>Causes or social issues you are passionate about</h2>
-      {Object.keys(formData["Causes or social issues candidate is most passionate about supporting"]).map((cause) => (
-        <div key={cause}>
+    <form onSubmit={handleNext}>
+      <div>
+        <label>{questions[currentQuestionIndex].label}</label>
+        {questions[currentQuestionIndex].type === 'text' ? (
           <input
-            type="checkbox"
-            name={`Causes or social issues candidate is most passionate about supporting.${cause}`}
-            checked={formData["Causes or social issues candidate is most passionate about supporting"][cause]}
+            type="text"
+            value={answers[currentQuestionIndex] || ''}
             onChange={handleInputChange}
+            required
           />
-          <label>{cause}</label>
-        </div>
-      ))}
-
-      {/* Skills section */}
-      <h2>Skills you want to bring to the nonprofit</h2>
-      {Object.keys(formData["Skills candidate is hoping to bring to the nonprofit"]).map((skill) => (
-        <div key={skill}>
-          <input
-            type="checkbox"
-            name={`Skills candidate is hoping to bring to the nonprofit.${skill}`}
-            checked={formData["Skills candidate is hoping to bring to the nonprofit"][skill]}
+        ) : questions[currentQuestionIndex].type === 'multi-select' ? (
+          renderMultiSelect(questions[currentQuestionIndex].options)
+        ) : (
+          <select
+            value={answers[currentQuestionIndex] || ''}
             onChange={handleInputChange}
-          />
-          <label>{skill}</label>
-        </div>
-      ))}
-
-      {/* Text fields */}
-      <div>
-        <label>Why are you interested in serving on a non-profit board?</label>
-        <textarea
-          name="Why are you interested in serving on a non-profit board?"
-          value={formData["Why are you interested in serving on a non-profit board?"]}
-          onChange={handleInputChange}
-        />
+            required
+          >
+            <option value="">Select an option</option>
+            {questions[currentQuestionIndex].options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
-
-      <div>
-        <label>Have you served in any leadership role for 6 months or more?</label>
-        <input
-          type="text"
-          name="Have you served in any leadership role for 6 months or more?"
-          value={formData["Have you served in any leadership role for 6 months or more?"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Share your experience with board service</label>
-        <textarea
-          name="Share your experience with board service"
-          value={formData["Share your experience with board service"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>What size of non-profit are you most interested in?</label>
-        <input
-          type="text"
-          name="What size of non-profit are you most interested in?"
-          value={formData["What size of non-profit are you most interested in?"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Who is your employer?</label>
-        <input
-          type="text"
-          name="Who is your employer"
-          value={formData["Who is your employer"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>What is your role/occupation?</label>
-        <input
-          type="text"
-          name="What is your role/occupation"
-          value={formData["What is your role/occupation"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Age</label>
-        <input
-          type="text"
-          name="Age"
-          value={formData["Age"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Choose how you identify yourself</label>
-        <input
-          type="text"
-          name="Choose how you identify yourself"
-          value={formData["Choose how you identify yourself"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Race/ethnicity</label>
-        <input
-          type="text"
-          name="Race/ethnicity"
-          value={formData["Race/ethnicity"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      {/* Dates candidate is available */}
-      <h2>Dates you are available</h2>
-      {Object.keys(formData["Dates candidate is available"]).map((day) => (
-        <div key={day}>
-          <input
-            type="checkbox"
-            name={`Dates candidate is available.${day}`}
-            checked={formData["Dates candidate is available"][day]}
-            onChange={handleInputChange}
-          />
-          <label>{day}</label>
-        </div>
-      ))}
-
-      {/* Times candidate is available */}
-      <h2>Times you are available</h2>
-      {Object.keys(formData["Times candidate is available"]).map((time) => (
-        <div key={time}>
-          <input
-            type="checkbox"
-            name={`Times candidate is available.${time}`}
-            checked={formData["Times candidate is available"][time]}
-            onChange={handleInputChange}
-          />
-          <label>{time}</label>
-        </div>
-      ))}
-
-      <div>
-        <label>Where are you located?</label>
-        <input
-          type="text"
-          name="Where are you located?"
-          value={formData["Where are you located?"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <button type="submit">Submit</button>
+      <button type="submit">
+        {currentQuestionIndex < questions.length - 1 ? 'Next' : 'Submit'}
+      </button>
     </form>
   );
-}
+};
 
 export default Dashboard;

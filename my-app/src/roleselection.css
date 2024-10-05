@@ -1,48 +1,67 @@
 /* RoleSelection.css */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Background applied to body */
+  font-family: Arial, sans-serif;
+}
+
 .role-selection-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #333; /* Darker text for better readability */
-    text-align: center; /* Center the heading */
-  }
-  
-  .button-container {
-    display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center;
-  }
-  
-  .btn {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    margin: 10px 0; /* Space between buttons */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    width: 200px; /* Fixed width for buttons */
-  }
-  
-  .btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
-  }
-  
-  .btn:active {
-    transform: scale(0.95); /* Slightly shrink button when pressed */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px; /* Constrain the width of the form */
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Ensure padding is included in the container's width */
+  min-height: 200px; /* Set a minimum height to prevent squishing */
+  margin: 0 auto; /* Ensure horizontal centering */
+}
+
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #333; /* Darker text for better readability */
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center;
+  width: 100%; /* Ensure button container takes full width */
+}
+
+.btn {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 10px 0; /* Space between buttons */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  width: 100%; /* Buttons take full width of the container */
+  max-width: 200px; /* Set a maximum width for buttons */
+  box-sizing: border-box; /* Ensure padding is included in button width */
+}
+
+.btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.btn:active {
+  transform: scale(0.95); /* Slightly shrink button when pressed */
+}
