@@ -89,35 +89,6 @@ body {
   text-decoration: underline;
 }
 
-.nonprofit-section {
-  margin-top: 150px; /* Increased margin to move it even lower */
-  text-align: center;
-}
-
-.nonprofit-section h2 {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-/* Smaller button that doesn't stretch across */
-.nonprofit-button-small {
-  padding: 8px 16px;  /* Smaller padding for a smaller button */
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 0.9rem; /* Smaller font size */
-  cursor: pointer;
-  margin-top: 10px;
-  width: fit-content;  /* Prevents the button from stretching */
-  display: inline-block;  /* Keeps the button from taking up full width */
-}
-
-.nonprofit-button-small:hover {
-  background-color: #0056b3;
-}
-
-/* Right section for login form */
 .subtitle {
   font-size: 1.2rem;
   color: #5f6368;

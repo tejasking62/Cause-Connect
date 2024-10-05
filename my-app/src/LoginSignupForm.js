@@ -1,67 +1,102 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import './login.css'; // Import the CSS file
+import './login.css'; // CSS file for styling
 
 function LoginSignupForm() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { action, role } = location.state || {};
-
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role] = useState('leader');  // Role is fixed to leader for this example
 
-  const handleSubmit = (e) => {
+  // Submit form handler
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`${action} as a ${role} with`, { email, password });
-
-    if (action === 'signup' && password !== confirmPassword) {
+    
+    if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
-    if (action === 'login') {
-      navigate('/dashboard', { state: { role } });
-    } else if (action === 'signup') {
-      alert("Sign up successful! Please log in.");
-      navigate('/', { state: { action: 'login' } });
+    // Create new leader data
+    const newLeader = {
+      name,  
+      email,
+      password, 
+      role,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/leaders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newLeader), 
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Sign up successful! Please log in.");
+      } else {
+        alert(result.error || 'Sign up failed.');
+      }
+    } catch (error) {
+      console.error('Error saving data:', error);
+      alert('Error occurred while signing up.');
     }
   };
 
   return (
     <div className="form-container">
-      <h1>{action === 'login' ? 'Login' : 'Sign Up'} as {action === 'signup' ? role.charAt(0).toUpperCase() + role.slice(1) : ''}</h1>
+      <h1>Sign Up as Leader</h1>
       <form onSubmit={handleSubmit} className="form">
+
+        {/* Name Field */}
+        <div className="form-group">
+          <label>Enter Your Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Email Field */}
         <div className="form-group">
           <label>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
+
+        {/* Password Field */}
         <div className="form-group">
           <label>Password:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
-        {action === 'signup' && (
-          <div className="form-group">
-            <label>Confirm Password:</label>
-            <input 
-              type="password" 
-              value={confirmPassword} 
-              onChange={(e) => setConfirmPassword(e.target.value)} 
-              required 
-            />
-          </div>
-        )}
-        <button type="submit" className="btn">{action === 'login' ? 'Login' : 'Sign Up'}</button>
+
+        {/* Confirm Password Field */}
+        <div className="form-group">
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn">Sign Up</button>
       </form>
     </div>
   );

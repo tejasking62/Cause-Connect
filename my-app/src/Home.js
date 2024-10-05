@@ -17,7 +17,9 @@ function Home() {
 
     setErrorMessage('');
     console.log('Login successful!', { email, password });
-    navigate('/dashboard');
+
+    // Pass the email to the Dashboard component after successful login
+    navigate('/dashboard', { state: { email } });
   };
 
   const handleSignUp = () => {
@@ -51,12 +53,7 @@ function Home() {
 
       <div className="home-container">
         <div className="left-section">
-          <h1>Match with Your Cause to Support <span>INSTANTLY</span></h1>
-          <div className="nonprofit-section">
-            <h2>Are you a <strong>Nonprofit?</strong></h2>
-
-            <button className="nonprofit-button-small">Join our Database!</button>
-          </div>
+          <h1>Match with Your Cause to Support <span className="highlight">INSTANTLY</span></h1>
           <p className="subtitle">Connect with NGOs and make a difference in your community.</p>
         </div>
 
