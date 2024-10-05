@@ -1,15 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login-signup', { state: { action: 'login' } });
+  };
+
+  const handleSignUp = () => {
+    navigate('/role-selection');  // No action needed, just navigate to role selection
+  };
+
   return (
     <div className="home-container">
       <h1>Welcome</h1>
-      <p>Select whether to log in or sign up as a Non-Profit or a Leader:</p>
-      <div className="buttons">
-        <Link to="/nonprofits" className="btn">Non-Profit Login/Sign Up</Link>
-        <Link to="/leaders" className="btn">Leader Login/Sign Up</Link>
-      </div>
+      <p>Please choose to log in or sign up:</p>
+      <button className="btn" onClick={handleLogin}>Login</button>
+      <button className="btn" onClick={handleSignUp}>Sign Up</button>
     </div>
   );
 }

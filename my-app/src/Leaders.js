@@ -1,3 +1,5 @@
+import React from 'react';
+
 import React, { useState } from 'react';
 
 function Leaders() {
@@ -6,7 +8,6 @@ function Leaders() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add logic for login or signup, using backend API
     console.log("Leader logged in/signing up with", { email, password });
   };
 
