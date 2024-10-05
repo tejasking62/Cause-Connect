@@ -5,11 +5,11 @@ function Home() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate('/role-selection', { state: { action: 'login' } });
+    navigate('/login-signup', { state: { action: 'login' } });
   };
 
   const handleSignUp = () => {
-    navigate('/role-selection', { state: { action: 'signup' } });
+    navigate('/role-selection');  // No action needed, just navigate to role selection
   };
 
   return (
