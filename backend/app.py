@@ -1,33 +1,58 @@
-from flask import Flask, jsonify
-import os
-from models import db, User, Nonprofits
-from auth import auth_routes
+from flask import Flask, request, jsonify
+from flask_bcrypt import Bcrypt
+from models import db, User
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
-
-# Configure the SQLAlchemy part of the app instance
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///./app.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Initialize SQLAlchemy with the app
 db.init_app(app)
+bcrypt = Bcrypt(app)
 
-# Register the auth blueprint
-app.register_blueprint(auth_routes)
+# Initialize database
+with app.app_context():
+    db.create_all()
 
-@app.route('/')
-def home():
-    return "Welcome to the Flask App!"
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    name = data.get('name')
+    email = data.get('email')
 
-@app.route('/test', methods=['GET'])
-def test():
-    return jsonify({"message": "Test successful"}), 200
+    if not username or not password or not name or not email:
+        return jsonify({"error": "All fields are required"}), 400
 
-@app.errorhandler(405)
-def method_not_allowed(e):
-    return jsonify(error=str(e)), 405
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()  # Create database tables
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    try:
+        new_user = User(username=username, password=hashed_password, name=name, email=email)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"message": "User created successfully"}), 201
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "Username or email already exists"}), 409
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({"error": "Username and password are required"}), 400
+
+    user = User.query.filter_by(username=username).first()
+
+    if user and bcrypt.check_password_hash(user.password, password):
+        return jsonify({"message": "Login successful"}), 200
+    else:
+        return jsonify({"error": "Invalid username or password"}), 401
+
+if __name__ == '__main__':
+    app.run(debug=True)

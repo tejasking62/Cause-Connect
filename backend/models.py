@@ -6,17 +6,16 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
-    name = db.Column(db.String(100), nullable=False)  # Added 'name' field
+    name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    role = db.Column(db.String(120), nullable=False, default='User')  # 'role' field with a default value
+    role = db.Column(db.String(120), nullable=False, default='User')
     password = db.Column(db.String(60), nullable=False)
 
-    # Relationship to NonprofitApplied
-    applications = db.relationship('NonprofitApplied', backref='author', lazy=True)
+    # Relationship to Nonprofits
+    nonprofits = db.relationship('Nonprofits', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
+        return f"User('{self.username}', '{self.email}', '{self.role}')"
 
 class Nonprofits(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,23 +24,7 @@ class Nonprofits(db.Model):
     sectors = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Added date_posted field
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"NonprofitApplied('{self.title}', '{self.date_posted}')"
-
-# class Badge(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100), nullable=False, unique=True)
-#     description = db.Column(db.Text, nullable=False)
-#     image_file = db.Column(db.String(100), nullable=False, default='default_badge.png')
-
-#     users = db.relationship('User', secondary='user_badge', back_populates='badges')
-
-#     user_badge = db.Table('user_badge',
-#         db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-#         db.Column('badge_id', db.Integer, db.ForeignKey('badge.id'), primary_key=True),
-#         db.Column('date_awarded', db.DateTime, nullable=False, default=datetime.utcnow)
-#     )
-
-    
+        return f"Nonprofits('{self.title}', '{self.date}')"
