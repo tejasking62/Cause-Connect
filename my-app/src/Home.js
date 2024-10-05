@@ -10,7 +10,7 @@ function Home() {
   };
 
   const handleSignUp = () => {
-    navigate('/role-selection');  // No action needed, just navigate to role selection
+    navigate('/role-selection');
   };
 
   return (
@@ -28,28 +28,31 @@ function Home() {
         </div>
         <button onClick={handleLogin}className="navbar-login">Login</button>
       </nav>
+    <div className="home-container">
+      <h1>Welcome to Spur Impact</h1>
+      <p>Fostering connections for emerging leaders to engage in community involvement.</p>
+      <blockquote>
+        “A leader is not a title but a <strong>disposition</strong> where people follow you.”
+      </blockquote>
+      <p>
+        Spur Impact helps bridge the gap between motivated leaders and nonprofit organizations.
+        Whether you're a young professional seeking growth or a nonprofit looking for passionate board members, we are here to connect you.
+      </p>
+      <button className="btn" onClick={handleLogin}>Login</button>
+      <button className="btn" onClick={handleSignUp}>Sign Up</button>
 
-      {/* Main Content */}
-      <div className="home-container">
-        {/* Left Section */}
-        <div className="left-section">
-          <h1>Match with Your Cause to Support <span>INSTANTLY</span></h1>
-        </div>
-
-        {/* Right Section (Login/Signup form) */}
-        <div className="right-section">
-          <h2>Welcome to CauseConnect</h2>
-          <button className="linkedin-button">
-            <img src="https://static.vecteezy.com/system/resources/previews/023/986/970/original/linkedin-logo-linkedin-logo-transparent-linkedin-icon-transparent-free-free-png.png" alt="LinkedIn logo" /> Sign up with LinkedIn
-          </button>
-          <p>OR</p>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button onClick={handleSignUp}>Sign up</button>
-          <div className="login-link">
-            <a href="#" onClick={handleLogin}>Did you forget your password?</a>
-          </div>
-        </div>
+      <div className="mission-section">
+        <h2>Our Mission</h2>
+        <p>
+          Spur Impact’s mission is to foster community involvement by connecting emerging leaders 
+          with nonprofit organizations. We inspire and empower individuals to achieve professional 
+          growth and make an impact in their communities.
+        </p>
+        <ul>
+          <li><strong>Professional Development:</strong> Empowering leaders through events like MILLSUMMIT and the Impact Awards.</li>
+          <li><strong>Community Impact:</strong> Connecting nonprofits with passionate individuals through initiatives like Delaware Gives and DoMore24 Delaware.</li>
+          <li><strong>Organizational Development:</strong> Supporting nonprofits by building diverse, younger, and skilled boards.</li>
+        </ul>
       </div>
     </div>
   );

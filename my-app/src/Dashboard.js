@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
-  const { role } = location.state; // Retrieve the user's role from state
+  const { role } = location.state; 
 
   return (
-    <div className="dashboard-container">
+    <div>
       <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
       {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
     </div>
   );
 }
-// Non-Profit Form with matching questions
+
 const NonProfitForm = () => {
   const questions = [
     { label: 'What causes/social issues are you most passionate about?', type: 'text' },
@@ -38,7 +37,6 @@ const NonProfitForm = () => {
   return <Questionnaire questions={questions} />;
 };
 
-// Leader Form with matching questions
 const LeaderForm = () => {
   const questions = [
     { label: 'What causes/social issues are you most passionate about?', type: 'text' },
@@ -63,7 +61,6 @@ const LeaderForm = () => {
   return <Questionnaire questions={questions} />;
 };
 
-// Questionnaire component to handle one-at-a-time questions with proper multi-select support
 const Questionnaire = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -97,7 +94,6 @@ const Questionnaire = ({ questions }) => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Handle form submission logic here, e.g., send answers to API
       console.log('Form submitted with answers:', answers);
       alert('Thank you for your submission!');
     }

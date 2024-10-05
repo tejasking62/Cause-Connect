@@ -1,0 +1,161 @@
+ [
+    {
+        "NGO Name": "1 in 7B Foundation",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": [],
+        "Sector": [
+            "Homelessness & Housing",
+            "Poverty & Hunger"
+        ]
+    },
+    {
+        "NGO Name": "100 Black Men of Delaware",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": ["Wilmington"],
+        "Sector": [
+            "BIPOC-Led (Board)",
+            "BIPOC-Led (CEO/ED)",
+            "BIPOC-Led (Sr/Exec Leadership)",
+            "Civic Engagement & Social Action",
+            "Community Advocacy",
+            "Mutual & Membership Benefit"
+        ]
+    },
+    {
+        "NGO Name": "321foundation",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": ["Bear"],
+        "Sector": [
+            "Community Advocacy",
+            "Disability Services",
+            "Human Services"
+        ]
+    },
+    {
+        "NGO Name": "4th-Dimension Leaders",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": ["Wilmington"],
+        "Sector": [
+            "BIPOC-Led (Board)",
+            "BIPOC-Led (CEO/ED)",
+            "BIPOC-Led (Sr/Exec Leadership)",
+            "Capacity Building",
+            "Education",
+            "Human Services",
+            "Social Justice",
+            "Youth Development"
+        ]
+    },
+    {
+        "NGO Name": "A Better Chance for Our Children",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": ["Milford", "Wilmington"],
+        "Sector": [
+            "Capacity Building",
+            "Civic Engagement & Social Action",
+            "Community Advocacy",
+            "Community Improvement",
+            "Education",
+            "Family Services",
+            "Human Services",
+            "Kids",
+            "Mental Health & Crisis Prevention",
+            "Public & Societal Benefit",
+            "Youth Development"
+        ]
+    },
+    {
+        "NGO Name": "A Buddy for Life, Inc.",
+        "County Served": "New Castle",
+        "Office Locations": ["New Castle"],
+        "Sector": [
+            "Animals"
+        ]
+    },
+    {
+        "NGO Name": "A Helping Hand",
+        "County Served": "Kent; New Castle",
+        "Office Locations": ["Middletown", "Newark"],
+        "Sector": [
+            "Community Advocacy",
+            "Education",
+            "Emergency Response",
+            "Employment",
+            "Entrepreneurship",
+            "Food, Agriculture, & Nutrition",
+            "Homelessness & Housing",
+            "Human Services",
+            "Mental Health & Crisis Prevention",
+            "Religious or Faith-based",
+            "Seniors",
+            "Substance Abuse Prevention",
+            "Women's Issues",
+            "Youth Development"
+        ]
+    },
+    {
+        "NGO Name": "Absolutely Flawless Women",
+        "County Served": "Sussex",
+        "Office Locations": ["Millsboro"],
+        "Sector": [
+            "BIPOC-Led (Board)",
+            "BIPOC-Led (CEO/ED)",
+            "BIPOC-Led (Sr/Exec Leadership)",
+            "Poverty & Hunger",
+            "Women's Issues"
+        ]
+    },
+    {
+        "NGO Name": "Academia Antonia Alonso Charter School",
+        "County Served": "New Castle",
+        "Office Locations": ["Newark"],
+        "Sector": [
+            "BIPOC-Led (Board)",
+            "BIPOC-Led (CEO/ED)",
+            "BIPOC-Led (Sr/Exec Leadership)",
+            "Education"
+        ]
+    },
+    {
+        "NGO Name": "ACLU of Delaware",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": ["Wilmington"],
+        "Sector": [
+            "Civic Engagement & Social Action",
+            "Community Advocacy",
+            "Crime & Legal Related",
+            "Politics & Advocacy",
+            "Social Justice",
+            "Women's Issues"
+        ]
+    },
+    {
+        "NGO Name": "Aetna Hose Hook and Ladder Company",
+        "County Served": "New Castle",
+        "Office Locations": ["Newark"],
+        "Sector": [
+            "Emergency Response",
+            "Volunteerism"
+        ]
+    },
+    {
+        "NGO Name": "Afri-female Institute, Inc.",
+        "County Served": "Kent",
+        "Office Locations": ["Magnolia"],
+        "Sector": [
+            "Women's Issues",
+            "Youth Development"
+        ]
+    },
+    {
+        "NGO Name": "African American Heritage Institute (AAHI)",
+        "County Served": "Kent; New Castle; Sussex",
+        "Office Locations": ["Wilmington"],
+        "Sector": [
+            "Arts & Culture",
+            "BIPOC-Led (Board)",
+            "BIPOC-Led (Sr/Exec Leadership)",
+            "Museums & Historical"
+        ]
+    }
+]

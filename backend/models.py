@@ -1,32 +1,46 @@
 from datetime import datetime
-from sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.sqlite import JSON
 
 db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
-    name = db.Column(db.String(100), nullable=False)  # Added 'name' field
+    name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    role = db.Column(db.String(120), nullable=False, default='User')  # 'role' field with a default value
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-
-    # Relationship to NonprofitApplied
-    applications = db.relationship('NonprofitApplied', backref='author', lazy=True)
+    role = db.Column(db.String(20), nullable=False, default='User')
+    is_nonprofit = db.Column(db.Boolean, default=False)
+    data = db.Column(JSON)
+    
+    # Relationship to Nonprofits (if the user is associated with a nonprofit)
+    nonprofit = db.relationship('Nonprofit', backref='user', uselist=False)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}', '{self.role}')"
 
-
-class NonprofitApplied(db.Model):
+class Nonprofit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100), nullable=False)
     sectors = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Added date_posted field
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"NonprofitApplied('{self.title}', '{self.date_posted}')"
+        return f"Nonprofit('{self.title}', '{self.date}')"
+    
+
+class Match(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    candidate_id = db.Column(db.Integer, nullable=False)
+    candidate_name = db.Column(db.String(100), nullable=False)
+    nonprofit_name = db.Column(db.String(100), nullable=False)
+    match_score = db.Column(db.Float)
+    match_explanation = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Match {self.candidate_name} - {self.nonprofit_name}>'

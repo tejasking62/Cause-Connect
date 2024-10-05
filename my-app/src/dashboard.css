@@ -1,77 +1,67 @@
-/* Dashboard.css */
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #333; /* Darker text for better readability */
-    text-align: center; /* Center the heading */
-  }
-  
-  .form-section {
-    width: 100%;
-    max-width: 400px; /* Limit width for better readability */
-    margin: 20px 0; /* Space between sections */
-    padding: 20px;
-    background: #ffffff; /* White background for forms */
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555; /* Lighter text */
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-  }
-  
-  input:focus {
-    border-color: #4CAF50; /* Green border on focus */
-    outline: none; /* Remove default outline */
-  }
-  
-  .btn {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    width: 100%; /* Full-width button */
-  }
-  
-  .btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
-  }
-  
-  .btn:active {
-    transform: scale(0.95); /* Slightly shrink button when pressed */
-  }
-  
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #8d9fbb;
+}
+
+.home-container {
+  display: float;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start; 
+  min-height: 100vh; 
+  padding: 40px; 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif; 
+  font-size: 5em;
+  margin-bottom: 15px;
+  color: #37474f;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  font-size: 10em;
+  margin-bottom: 30px;
+  color: #638a9d;
+  line-height: 20;
+  max-width: 700px;
+  text-align: left;
+}
+
+.btn {
+  background-color: #4fc3f7;
+  color: #37474f;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin: 15px 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #29b6f6;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+  position: absolute; /* Use absolute positioning for button container */
+  bottom: 20px; /* Distance from the bottom */
+  left: 20px; /* Distance from the left */
+}
+
