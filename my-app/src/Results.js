@@ -53,7 +53,6 @@ export default function Results() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="mb-4 p-3 border border-gray-300 rounded-md w-full md:w-1/3 mx-auto"
       />
-
       <div className="w-full">
         {resultsJSON
           .filter(match => 
