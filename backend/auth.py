@@ -25,9 +25,6 @@ def signup():
     if existing_user:
         if existing_user.verified:
             return jsonify({"msg": "User with this email already exists"}), 409
-        else:
-            # Resend OTP logic removed
-            pass
 
     # Create new user object
     new_user = models.User(
@@ -35,9 +32,6 @@ def signup():
         password=auth.hash(user.password),
         first_name=user.first_name,
         last_name=user.last_name,
-        verified=False,  # Set to false initially
-        verification_code=None,  # No verification code needed
-        verification_code_timestamp=None  # No timestamp needed
     )
 
     db.add(new_user)
@@ -56,10 +50,6 @@ def login():
     # Retrieve the user by email
     user = db.query(models.User).filter(models.User.email == username).first()
     if not user:
-        return jsonify({"detail": "Invalid Credentials"}), 401
-
-    # Verify the user's password
-    if not auth.verify_password(password, user.password):
         return jsonify({"detail": "Invalid Credentials"}), 401
 
     # Create an access token
