@@ -1,47 +1,59 @@
-/* Home.css */
+/* styles.css */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #e9ecef;
+}
+
 .home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
+    height: 100vh;
     text-align: center;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    color: #333; /* Darker text for better readability */
-  }
-  
-  p {
-    font-size: 1.2em;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #343a40;
     margin-bottom: 20px;
-    color: #555; /* Slightly lighter text */
-  }
-  
-  .btn {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
+}
+
+p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 12px 24px;
+    font-size: 1rem;
     cursor: pointer;
-    margin: 10px 0;
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  }
-  
-  .btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
-  }
-  
-  .btn:active {
-    transform: scale(0.95); /* Slightly shrink button when pressed */
-  }
-  
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 150px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
