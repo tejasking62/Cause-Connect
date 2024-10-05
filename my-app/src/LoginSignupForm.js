@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function LoginSignupForm() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { action, role } = location.state;  // 'login' or 'signup' and 'nonprofit' or 'leader'
+  const { action, role } = location.state || {}; // Adjust to handle undefined state
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,10 +20,11 @@ function LoginSignupForm() {
       return;
     }
 
-    // Here you would normally send the login or signup request to your API
-
-    // If signup is successful, redirect to login
-    if (action === 'signup') {
+    // Simulate a successful login for demo purposes
+    if (action === 'login') {
+      // After successful login, redirect to dashboard
+      navigate('/dashboard', { state: { role } });
+    } else if (action === 'signup') {
       alert("Sign up successful! Please log in.");
       navigate('/', { state: { action: 'login' } }); // Redirect to login page
     }
