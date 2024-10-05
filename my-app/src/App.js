@@ -1,3 +1,14 @@
+// src/App.js
+import React from 'react';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to My React App</h1>
+        <p>This is a simple skeleton for a React application.</p>
+      </header>
+    </div>
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
