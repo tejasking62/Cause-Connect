@@ -1,8 +1,23 @@
-import openai
+import os
+from openai import OpenAI
 from sentence_transformers import SentenceTransformer, util
 import json
 import os
 
+<<<<<<< HEAD:llm/match-profile.py
+=======
+# Load API key from environment variable
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+
+# Initialize OpenAI client
+
+client = OpenAI(api_key=api_key)
+
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+>>>>>>> 497d202b744f9242bb996fa3b74d11b64bd7b56a:backend/llm/match-profile.py
 # Set your OpenAI API key
 openai.api_key = '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'
 model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -81,6 +96,7 @@ nonprofit_list = [
     "Network ID": "653e97acae",
     "Image": "nonprofit_image.png"
   },
+<<<<<<< HEAD:llm/match-profile.py
   {
     "#": "d9fh6npx92k6c8hf1lwoi7vtnab2gk6r",
     "What is your nonprofit’s name?": "Nonprofit D",
@@ -144,19 +160,77 @@ nonprofit_list = [
     "Network ID": "653e97acae",
     "Image": "nonprofit_image.png"
   }]
+=======
+]
+
+# Function to format the candidate's causes and skills
+def format_nested_data(nested_dict):
+    return ", ".join([value for key, value in nested_dict.items() if value])
+
+# Define a function to call the OpenAI API
+def match_candidate_to_nonprofits(candidate, nonprofits):
+    # Extract candidate details
+    candidate_name = candidate['Enter your name']
+    candidate_skills = format_nested_data(candidate['Skills candidate is hoping to bring to the nonprofit'])
+    candidate_interests = format_nested_data(candidate['Causes or social issues candidate is most passionate about supporting'])
+    candidate_availability = candidate['Dates candidate is available']
+    candidate_time_slots = candidate['Times candidate is available']
+    candidate_location = candidate['Where are you located?']
+
+    # Create the prompt
+    prompt = f"""
+    You are an assistant that matches candidates to nonprofit organizations.
+    
+    Here is the candidate data:
+    Name: {candidate_name}
+    Skills: {candidate_skills}
+    Causes of interest: {candidate_interests}
+    Availability: {candidate_availability}
+    Time Slots: {candidate_time_slots}
+    Location: {candidate_location}
+    
+    Here are the nonprofit organizations:
+    """
+
+    for nonprofit in nonprofits:
+        prompt += f"""
+        Nonprofit Name: {nonprofit['name']}
+        Focus Areas: {', '.join(nonprofit['focus_areas'])}
+        Skills Needed: {', '.join(nonprofit['skills_needed'])}
+        Location: {nonprofit['location']}
+        Time Slots: {', '.join(nonprofit['time_slots'])}
+        """
+
+    prompt += """
+    Based on the candidate's skills, interests, availability, and location, suggest the best matching nonprofit(s) for the candidate and explain why.
+    """
+
+    # Call OpenAI API
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are an assistant that matches candidates to nonprofit organizations."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=500,
+    temperature=0.5)
+
+    # Extract and return the response
+    return response.choices[0].message.content.strip()
+
+# ... existing code ...
+
+>>>>>>> 497d202b744f9242bb996fa3b74d11b64bd7b56a:backend/llm/match-profile.py
 
 # Function to generate a descriptive paragraph using GPT
 def generate_paragraph(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=150,
-        temperature=0.5
-    )
-    return response.choices[0].message['content'].strip()
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=150,
+    temperature=0.5)
+    return response.choices[0].message.content.strip()
 
 # Function to format the candidate's causes and skills
 def format_nested_data(nested_dict):
@@ -174,7 +248,22 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
     candidate_time_slots = candidate.get('Times candidate is available', {})
     candidate_location = candidate.get('Where are you located?', 'Unknown')
 
+<<<<<<< HEAD:llm/match-profile.py
     # Create the prompt with an explicit request for match percentage
+=======
+# def compute_similarity(candidate_paragraph, nonprofit_paragraph):
+#     # Encode the paragraphs to get their embeddings
+#     candidate_embedding = model.encode(candidate_paragraph, convert_to_tensor=True)
+#     nonprofit_embedding = model.encode(nonprofit_paragraph, convert_to_tensor=True)
+
+#     # Compute cosine similarity between the embeddings
+#     similarity = util.pytorch_cos_sim(candidate_embedding, nonprofit_embedding)
+
+#     return similarity.item() * 100  # Convert to percentage
+
+# Function to compute similarity score using GPT
+def compute_similarity_with_gpt(candidate_paragraph, nonprofit_paragraph):
+>>>>>>> 497d202b744f9242bb996fa3b74d11b64bd7b56a:backend/llm/match-profile.py
     prompt = f"""
     You are an assistant that matches candidates to nonprofit organizations.
     
@@ -189,6 +278,7 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
     Here are the nonprofit organizations:
     """
 
+<<<<<<< HEAD:llm/match-profile.py
     for nonprofit in nonprofits:
         prompt += f"""
         Nonprofit Name: {nonprofit['What is your nonprofit’s name?']}
@@ -213,9 +303,19 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
         max_tokens=500,
         temperature=0.5
     )
+=======
+    # Call OpenAI API
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are an assistant that evaluates compatibility between candidates and nonprofits."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=150,
+    temperature=0.5)
+>>>>>>> 497d202b744f9242bb996fa3b74d11b64bd7b56a:backend/llm/match-profile.py
 
     # Extract and return the response
-    return response.choices[0].message['content'].strip()
+    return response.choices[0].message.content.strip()
 
 # Function to create a candidate paragraph
 def create_candidate_paragraph(candidate):
@@ -243,8 +343,29 @@ results = []
 
 # Process only the candidate with the name 'aa'
 for candidate in candidates:
+<<<<<<< HEAD:llm/match-profile.py
     if candidate.get('name') == 'aa':  # Process candidate with name 'aa'
         candidate_paragraph = create_candidate_paragraph(candidate)
+=======
+    candidate_paragraph = create_candidate_paragraph(candidate)
+
+    for nonprofit in nonprofit_list:
+        nonprofit_paragraph = create_nonprofit_paragraph(nonprofit)
+        similarity_score = compute_similarity_with_gpt(candidate_paragraph, nonprofit_paragraph)
+
+        # Assuming the response is in the format "Match Percentage: X% - Explanation: ..."
+        match_percentage = float(similarity_score.split('%')[0].split(':')[-1].strip())
+
+        results.append({
+            "candidate_name": candidate['Enter your name'],
+            "nonprofit_name": nonprofit['What is your nonprofit’s name?'],
+            "nonprofit_summary": nonprofit_paragraph,
+            "category": nonprofit['Under what category does your nonprofit fit best?'],
+            "location": nonprofit['Where is your nonprofit located?'],
+            "match_percentage": match_percentage,
+            "explanation": similarity_score
+        })
+>>>>>>> 497d202b744f9242bb996fa3b74d11b64bd7b56a:backend/llm/match-profile.py
 
         for nonprofit in nonprofit_list:
             nonprofit_paragraph = create_nonprofit_paragraph(nonprofit)
