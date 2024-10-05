@@ -29,11 +29,11 @@ const NonProfitForm = () => {
 // Leader Form with general questions
 const LeaderForm = () => {
   const questions = [
-    { label: 'What is your leadership philosophy?', type: 'text' },
-    { label: 'Describe a successful project you led and what made it successful.', type: 'text' },
-    { label: 'How do you handle team conflicts?', type: 'text' },
-    { label: 'What strategies do you use to motivate your team?', type: 'text' },
-    { label: 'How do you envision fostering growth within an organization?', type: 'text' },
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
+    { label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?', type: 'text' },
+    { label: 'Are you comfortable working in a leadership or team management role, or do you prefer individual contributor positions?', type: 'text' },
+    { label: 'Do you prefer roles that are more operational or those that are client-facing (e.g., administrative work versus direct service with communities)?', type: 'text' },
   ];
 
   return <Questionnaire questions={questions} />;
