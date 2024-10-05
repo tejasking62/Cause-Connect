@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate('/login-signup', { state: { action: 'login' } });
+    if (!email || !password) {
+      setErrorMessage('Please enter both email and password.');
+      return;
+    }
+
+    setErrorMessage('');
+    console.log('Login successful!', { email, password });
+    navigate('/dashboard');
   };
 
   const handleSignUp = () => {
     navigate('/role-selection');
   };
 
+  const handleLinkedInSignUp = () => {
+    console.log('LinkedIn sign up clicked');
+    // Implement LinkedIn OAuth logic here
+  };
+
+  const handleForgotPassword = () => {
+    console.log('Forgot password clicked');
+    // Implement forgot password logic here
+  };
+
   return (
-    <div>
-      {/* Navbar */}
+    <div className="home-page">
       <nav className="navbar">
         <div className="navbar-left">
           <div className="navbar-logo">CauseConnect</div>
@@ -26,34 +46,62 @@ function Home() {
             <li className="navbar-item">Contact</li>
           </ul>
         </div>
-        <button onClick={handleLogin}className="navbar-login">Login</button>
+        <button className="navbar-login" onClick={handleLogin}>Login</button>
       </nav>
-    <div className="home-container">
-      <h1>Welcome to Spur Impact</h1>
-      <p>Fostering connections for emerging leaders to engage in community involvement.</p>
-      <blockquote>
-        “A leader is not a title but a <strong>disposition</strong> where people follow you.”
-      </blockquote>
-      <p>
-        Spur Impact helps bridge the gap between motivated leaders and nonprofit organizations.
-        Whether you're a young professional seeking growth or a nonprofit looking for passionate board members, we are here to connect you.
-      </p>
-      <button className="btn" onClick={handleLogin}>Login</button>
-      <button className="btn" onClick={handleSignUp}>Sign Up</button>
 
-      <div className="mission-section">
-        <h2>Our Mission</h2>
-        <p>
-          Spur Impact’s mission is to foster community involvement by connecting emerging leaders 
-          with nonprofit organizations. We inspire and empower individuals to achieve professional 
-          growth and make an impact in their communities.
-        </p>
-        <ul>
-          <li><strong>Professional Development:</strong> Empowering leaders through events like MILLSUMMIT and the Impact Awards.</li>
-          <li><strong>Community Impact:</strong> Connecting nonprofits with passionate individuals through initiatives like Delaware Gives and DoMore24 Delaware.</li>
-          <li><strong>Organizational Development:</strong> Supporting nonprofits by building diverse, younger, and skilled boards.</li>
-        </ul>
+      <div className="home-container">
+        <div className="left-section">
+          <h1>Match with Your Cause to Support <span className="highlight">INSTANTLY</span></h1>
+          <p className="subtitle">Connect with NGOs and make a difference in your community.</p>
+        </div>
+
+        <div className="right-section">
+          <h2>Welcome to CauseConnect</h2>
+          <button className="linkedin-button" onClick={handleLinkedInSignUp}>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/023/986/970/original/linkedin-logo-linkedin-logo-transparent-linkedin-icon-transparent-free-free-png.png"
+              alt="LinkedIn logo"
+              className="linkedin-icon"
+            />
+            Sign up with LinkedIn
+          </button>
+          <div className="divider">
+            <span>OR</span>
+          </div>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-field"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-field"
+            />
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <button className="login-button" onClick={handleLogin}>Login</button>
+            <button className="signup-button" onClick={handleSignUp}>Sign up</button>
+          </form>
+          <button className="forgot-password" onClick={handleForgotPassword}>
+            Forgot your password?
+          </button>
+        </div>
       </div>
+
+      <footer className="footer">
+        <div className="footer-left">
+          <span>&copy; 2024 CauseConnect. All rights reserved.</span>
+        </div>
+        <div className="footer-right">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </footer>
     </div>
   );
 }
