@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function Dashboard() {
@@ -13,40 +13,71 @@ function Dashboard() {
   );
 }
 
-// Example form for Non-Profit users
-const NonProfitForm = () => (
-  <div>
-    <h2>Non-Profit Specific Questions</h2>
-    <form>
-      <div>
-        <label>Project Name: </label>
-        <input type="text" required />
-      </div>
-      <div>
-        <label>Funding Goal: </label>
-        <input type="number" required />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-);
+// Non-Profit Form with general questions
+const NonProfitForm = () => {
+  const questions = [
+    { label: 'What motivates you to work in the non-profit sector?', type: 'text' },
+    { label: 'Describe any volunteer experiences you have had.', type: 'text' },
+    { label: 'What skills do you possess that can benefit a non-profit organization?', type: 'text' },
+    { label: 'How do you measure the success of a non-profit initiative?', type: 'text' },
+    { label: 'What challenges do you think non-profits face today?', type: 'text' },
+  ];
 
-// Example form for Leader users
-const LeaderForm = () => (
-  <div>
-    <h2>Leader Specific Questions</h2>
-    <form>
+  return <Questionnaire questions={questions} />;
+};
+
+// Leader Form with general questions
+const LeaderForm = () => {
+  const questions = [
+    { label: 'What is your leadership philosophy?', type: 'text' },
+    { label: 'Describe a successful project you led and what made it successful.', type: 'text' },
+    { label: 'How do you handle team conflicts?', type: 'text' },
+    { label: 'What strategies do you use to motivate your team?', type: 'text' },
+    { label: 'How do you envision fostering growth within an organization?', type: 'text' },
+  ];
+
+  return <Questionnaire questions={questions} />;
+};
+
+// Questionnaire component to handle one-at-a-time questions
+const Questionnaire = ({ questions }) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+
+  const handleInputChange = (e) => {
+    setAnswers({
+      ...answers,
+      [currentQuestionIndex]: e.target.value,
+    });
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      // Handle form submission logic here, e.g., send answers to API
+      console.log('Form submitted with answers:', answers);
+      alert('Thank you for your submission!');
+    }
+  };
+
+  return (
+    <form onSubmit={handleNext}>
       <div>
-        <label>Leadership Style: </label>
-        <input type="text" required />
+        <label>{questions[currentQuestionIndex].label}</label>
+        <input
+          type={questions[currentQuestionIndex].type}
+          value={answers[currentQuestionIndex] || ''}
+          onChange={handleInputChange}
+          required
+        />
       </div>
-      <div>
-        <label>Team Size: </label>
-        <input type="number" required />
-      </div>
-      <button type="submit">Submit</button>
+      <button type="submit">
+        {currentQuestionIndex < questions.length - 1 ? 'Next' : 'Submit'}
+      </button>
     </form>
-  </div>
-);
+  );
+};
 
 export default Dashboard;
