@@ -21,5 +21,9 @@ def hash(password: str):
 def verify_password(plain_password: str, hashed_password: str):
     return password_hasher.verify(hashed_password, plain_password)
 
+def create_access_token(data: dict):
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    data.update({"exp": expire})
 
-
+    encoded_jwt = create_access_token(identity=data)
+    return encoded_jwt
