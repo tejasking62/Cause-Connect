@@ -1,8 +1,158 @@
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 100px;
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo and menu grouped on the left */
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1C1C1C;
+  margin-right: 30px; /* Spacing between logo and menu */
+}
+
+.navbar-menu {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-item {
+  font-size: 16px;
+  color: #1C1C1C;
+  cursor: pointer;
+}
+
+.navbar-item:hover {
+  text-decoration: underline;
+}
+
+/* Force the logo and menu to stay left and button to stay right */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Ensures left section takes all available space */
+}
+
+.navbar-login {
+  background-color: #007BFF;
+  color: white;
+  padding: 8px 16px; /* Adjusted padding for less width */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: auto;
+}
+
+.navbar-login:hover {
+  background-color: #0056b3;
+}
+
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #F2F2F2;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main container to center content */
 /* Home.css */
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+  padding: 0 100px;
+}
+
+/* Left section for the heading */
+.left-section {
+  max-width: 50%;
+}
+
+.left-section h1 {
+  font-size: 48px;
+  line-height: 1.2;
+  color: #1C1C1C;
+}
+
+.left-section h1 span {
+  color: #007BFF; /* This is for the blue highlight */
+  text-decoration: underline;
+  text-decoration-thickness: 5px;
+}
+
+.nonprofit-section {
+  margin-top: 40px; /* Increased margin to add more space */
+  text-align: center; /* Center align the text and button */
+}
+
+.nonprofit-section p {
+  font-size: 18px;
+  color: #1C1C1C;
+}
+
+.database-btn {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 24px; /* Reduced padding to make the button smaller */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px; /* Added margin for spacing */
+  display: inline-block;
+}
+
+.database-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Right section for login form */
+.right-section {
+  background-color: #FFFFFF;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+}
+
+.right-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #1C1C1C;
+}
+
+.right-section h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #1C1C1C;
+}
+
+input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+button, .linkedin-button {
+  width: 100%;
+  background-color: #007BFF;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px 0;
   justify-content: center;
   min-height: 100vh; /* Full viewport height */
   background: linear-gradient(135deg, #e0f7fa, #b0bec5); /* Light blue gradient background */
@@ -49,6 +199,10 @@ p {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* More shadow on hover */
 }
 
+.linkedin-button img {
+  width: 20px; /* Set desired width */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px;
 .btn:active {
   transform: translateY(1px); /* Slight press effect */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Less shadow when pressed */

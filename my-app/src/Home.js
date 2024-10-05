@@ -14,6 +14,20 @@ function Home() {
   };
 
   return (
+    <div>
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="navbar-left">
+          <div className="navbar-logo">CauseConnect</div>
+          <ul className="navbar-menu">
+            <li className="navbar-item">Home</li>
+            <li className="navbar-item">Product</li>
+            <li className="navbar-item">Pricing</li>
+            <li className="navbar-item">Contact</li>
+          </ul>
+        </div>
+        <button onClick={handleLogin}className="navbar-login">Login</button>
+      </nav>
     <div className="home-container">
       <h1>Welcome to Spur Impact</h1>
       <p>Fostering connections for emerging leaders to engage in community involvement.</p>
