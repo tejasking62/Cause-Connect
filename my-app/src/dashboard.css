@@ -1,36 +1,36 @@
-/* Home.css */
+
 body {
-  font-family: 'Roboto', sans-serif; /* Default font for the body */
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #8d9fbb;
 }
 
 .home-container {
-  display: flex;
+  display: float;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the start (left) */
-  justify-content: flex-start; /* Align content to the start (top) */
-  min-height: 100vh; /* Full viewport height */
-  padding: 40px; /* Padding around the container */
+  align-items: flex-start;
+  justify-content: flex-start; 
+  min-height: 100vh; 
+  padding: 40px; 
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
 }
 
 h1 {
-  font-family: 'Montserrat', sans-serif; /* Updated font for the title */
-  font-size: 5em; /* Increased font size for a bigger title */
+  font-family: 'Montserrat', sans-serif; 
+  font-size: 5em;
   margin-bottom: 15px;
   color: #37474f;
-  letter-spacing: 2px; /* Increased letter spacing */
+  letter-spacing: 2px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 p {
-  font-size: 1.3em;
+  font-size: 10em;
   margin-bottom: 30px;
-  color: #546e7a;
-  line-height: 1.6;
+  color: #638a9d;
+  line-height: 20;
   max-width: 700px;
   text-align: left;
 }

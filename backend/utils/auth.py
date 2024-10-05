@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from argon2 import PasswordHasher
-from flask import request, jsonify, g
+from flask import request, jsonify
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 from sqlalchemy.orm import Session
 from models import User 
