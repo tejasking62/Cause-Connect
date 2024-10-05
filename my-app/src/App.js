@@ -6,7 +6,6 @@ import LoginSignupForm from './LoginSignupForm';
 import Dashboard from './Dashboard';
 import Results from './Results'
 
-
 // Routes to different pages
 function App() {
   return (
