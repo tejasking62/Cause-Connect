@@ -4,7 +4,6 @@ import Home from './Home';
 import RoleSelection from './RoleSelection';
 import LoginSignupForm from './LoginSignupForm';
 import Dashboard from './Dashboard'; // Import the Dashboard component
-import Submission from './Submission';  // Import the submission success component
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
         <Route path="/role-selection" element={<RoleSelection />} />  {/* Role selection page */}
         <Route path="/login-signup" element={<LoginSignupForm />} />  {/* Login/Sign-up form page */}
         <Route path="/dashboard" element={<Dashboard />} />  {/* Dashboard page */}
-        <Route path="/submission" element={<Submission />} />  {/* Success page */}
       </Routes>
     </Router>
   );

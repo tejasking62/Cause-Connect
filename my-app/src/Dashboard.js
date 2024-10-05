@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
-  const role = location.state?.role || 'default'; // Retrieve the user's role from state
+  const { role } = location.state; 
 
   return (
-    <div className="dashboard-container">
+    <div>
       <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
       {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
     </div>
@@ -24,7 +23,7 @@ const NonProfitForm = () => {
       options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
     {
-      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in behind-the-scenes work like program development, research, or administration?',
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
       type: 'select',
       options: ['Field-based', 'Behind-the-scenes'],
     },
@@ -48,7 +47,7 @@ const LeaderForm = () => {
       options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
     {
-      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in behind-the-scenes work like program development, research, or administration?',
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
       type: 'select',
       options: ['Field-based', 'Behind-the-scenes'],
     },
@@ -96,9 +95,7 @@ const Questionnaire = ({ questions }) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       console.log('Form submitted with answers:', answers);
-  
-      // Redirect to submission success page
-      window.location.href = '/submission';
+      alert('Thank you for your submission!');
     }
   };
 
