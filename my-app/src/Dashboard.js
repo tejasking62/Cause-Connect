@@ -63,7 +63,7 @@ const LeaderForm = () => {
   return <Questionnaire questions={questions} />;
 };
 
-// Questionnaire component to handle one-at-a-time questions with multi-select support
+// Questionnaire component to handle one-at-a-time questions with proper multi-select support
 const Questionnaire = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -75,15 +75,20 @@ const Questionnaire = ({ questions }) => {
     });
   };
 
-  const handleMultiSelectChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
-    if (selectedOptions.length <= 3) {
+  const handleMultiSelectChange = (e, option) => {
+    const currentAnswers = answers[currentQuestionIndex] || [];
+    const selected = e.target.checked;
+
+    if (selected && currentAnswers.length < 3) {
       setAnswers({
         ...answers,
-        [currentQuestionIndex]: selectedOptions,
+        [currentQuestionIndex]: [...currentAnswers, option],
       });
-    } else {
-      alert("You can only select up to 3 options.");
+    } else if (!selected) {
+      setAnswers({
+        ...answers,
+        [currentQuestionIndex]: currentAnswers.filter(item => item !== option),
+      });
     }
   };
 
@@ -98,6 +103,31 @@ const Questionnaire = ({ questions }) => {
     }
   };
 
+  const renderMultiSelect = (options) => {
+    const currentAnswers = answers[currentQuestionIndex] || [];
+
+    return (
+      <div>
+        {options.map((option, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              id={option}
+              name={option}
+              value={option}
+              checked={currentAnswers.includes(option)}
+              onChange={(e) => handleMultiSelectChange(e, option)}
+            />
+            <label htmlFor={option}>{option}</label>
+          </div>
+        ))}
+        {currentAnswers.length >= 3 && (
+          <p style={{ color: 'red' }}>You can only select up to 3 options.</p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <form onSubmit={handleNext}>
       <div>
@@ -110,18 +140,7 @@ const Questionnaire = ({ questions }) => {
             required
           />
         ) : questions[currentQuestionIndex].type === 'multi-select' ? (
-          <select
-            multiple
-            value={answers[currentQuestionIndex] || []}
-            onChange={handleMultiSelectChange}
-            required
-          >
-            {questions[currentQuestionIndex].options.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          renderMultiSelect(questions[currentQuestionIndex].options)
         ) : (
           <select
             value={answers[currentQuestionIndex] || ''}
