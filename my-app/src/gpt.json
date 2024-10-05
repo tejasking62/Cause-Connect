@@ -1,0 +1,56 @@
+ [
+    {
+        "candidate_name": "aa",
+        "nonprofit_name": "Nonprofit C",
+        "nonprofit_summary": "Nonprofit C is a dedicated organization focused on Healthcare and Mental Care. They are currently seeking individuals with Social Media skills to amplify their impact. The nonprofit greatly values contributions in Community Outreach and is particularly interested in candidates who are available on Wednesdays.",
+        "category": "Healthcare and mental care",
+        "location": "Other",
+        "match_percentage": 100.0,
+        "match_summary": "Based on the provided data, the best matching nonprofit for the candidate \"aa\" is Nonprofit B. \n\nMatch Percentage: 100%\n\nExplanation: \n\nNonprofit B's focus area of Healthcare and mental care aligns perfectly with the candidate's causes of interest which are Healthcare and mental health. The candidate's skill in Project management is also exactly what Nonprofit B needs. \n\nOn the availability front, the candidate is available on Wednesdays and the time slot of 10am-1pm matches with the candidate's available time slot. \n\nFinally, the location of Nonprofit B is in New Jersey which is the same as the candidate's location. \n\nTherefore, considering the alignment in focus areas, skills needed, availability, and location, Nonprofit B is a perfect match for the candidate."
+    },
+    {
+        "candidate_name": "aa",
+        "nonprofit_name": "Nonprofit B",
+        "nonprofit_summary": "Nonprofit B is a dedicated organization focused on healthcare and mental care. They are currently seeking individuals with project management skills to help boost their impact. They highly value contributions in areas of strategy and governance. Preferably, they are looking for candidates who are available on Wednesdays.",
+        "category": "Healthcare and mental care",
+        "location": "New Jersey",
+        "match_percentage": 75.0,
+        "match_summary": "Based on the candidate's information, the best match would be:\n\nNonprofit B\nMatch Percentage: 75%\n\nExplanation: Nonprofit B aligns with the candidate's interest in healthcare and mental care. The candidate's skill in project management is needed by the nonprofit. The location, New Jersey, is also a match. The candidate is available on Wednesday and the time slot of 10am-1pm, which matches with the Nonprofit B's time slot. The match isn't 100% as the candidate's availability doesn't fully align with the nonprofit's time slot. \n\nNonprofit C, Nonprofit A, Nonprofit D, Nonprofit E, and Nonprofit F are not suitable matches due to a combination of mismatch in skills, location, and time slots."
+    },
+    {
+        "candidate_name": "aa",
+        "nonprofit_name": "Nonprofit A",
+        "nonprofit_summary": "Nonprofit A is an education-focused organization seeking individuals skilled in project management to boost their impact. They highly value contributions in community outreach and have a preference for candidates who are available on Mondays.",
+        "category": "Education",
+        "location": "Other",
+        "match_percentage": 75.0,
+        "match_summary": "The best matching nonprofit for the candidate is Nonprofit B.\n\nMatch Percentage: 75%\n\nExplanation: \n\nNonprofit B aligns with the candidate's cause of interest, which is healthcare and mental care. The candidate's skill in project management is also needed by Nonprofit B, which makes the candidate a potentially valuable addition to the organization. The candidate's availability on Wednesday matches with the time slot provided by Nonprofit B (10am-1pm). Moreover, the location of Nonprofit B is in New Jersey, which is the same as the candidate's location. \n\nThe match is not 100% because the candidate's availability is not fully aligned with the nonprofit's time slot. The candidate is only available on Wednesday, while it's not specified what days the nonprofit requires assistance. However, given the strong alignment in other areas, this is a minor issue that could potentially be worked out with the organization."
+    },
+    {
+        "candidate_name": "aa",
+        "nonprofit_name": "Nonprofit D",
+        "nonprofit_summary": "Nonprofit D is a dedicated organization focused on promoting Art and Cultures. They are currently seeking individuals with marketing skills to boost their impact. The organization highly values contributions in Creative and Arts Programming. Preferably, they are looking for candidates who are available on Thursdays.",
+        "category": "Art and cultures",
+        "location": "California",
+        "match_percentage": 75.0,
+        "match_summary": "Based on the candidate's information, the best match would be Nonprofit B. \n\nMatch Percentage: 75%\n\nExplanation: Nonprofit B aligns with the candidate's skills in project management and their interest in healthcare and mental care. The organization is also located in New Jersey, which is the candidate's location. The time slot of 10am-1pm at Nonprofit B also matches the candidate's availability. The match percentage isn't 100% because the candidate is not available on all days of the week that the nonprofit might require assistance."
+    },
+    {
+        "candidate_name": "aa",
+        "nonprofit_name": "Nonprofit E",
+        "nonprofit_summary": "Nonprofit E is a dedicated organization focused on promoting social justice and equity. They are actively seeking individuals skilled in diversity, equity, and inclusion to augment their impact. The organization highly values contributions in advocacy and social justice. Ideal candidates would be available to contribute their expertise on Mondays.",
+        "category": "Social justice and equity",
+        "location": "New York",
+        "match_percentage": 100.0,
+        "match_summary": "Based on the candidate's skills, interests, availability, and location, the best matching nonprofit for the candidate is Nonprofit B.\n\nMatch Percentage: 100%\n\nExplanation: \n\nNonprofit B is focused on Healthcare and Mental Care, which aligns with the candidate's causes of interest. This shows that the candidate would be working in a field they are passionate about. \n\nIn terms of skills, Nonprofit B is in need of Project Management, which is a skill the candidate possesses. This means the candidate would be able to effectively contribute to the organization.\n\nThe candidate is available on Wednesday and the time slot they are available for (10am-1pm) matches with Nonprofit B's time slot. This ensures that the candidate would be able to commit to the time required by the organization.\n\nFinally, Nonprofit B is located in New Jersey, the same location as the candidate. This means that the candidate would not have to relocate or commute long distances to work with the organization.\n\nGiven all these factors, Nonprofit B is a perfect match for the candidate."
+    },
+    {
+        "candidate_name": "aa",
+        "nonprofit_name": "Nonprofit F",
+        "nonprofit_summary": "Nonprofit F is a dedicated organization focused on poverty alleviation and housing. They are currently seeking individuals with expertise in Human Resources to boost their impact. The organization highly values contributions in the fields of Housing and Development. Ideal candidates would be available on Tuesdays.",
+        "category": "Poverty alleviation and housing",
+        "location": "Florida",
+        "match_percentage": 75.0,
+        "match_summary": "Based on the candidate's information, the best matching nonprofit organization for the candidate is:\n\nNonprofit Name: Nonprofit B\nMatch Percentage: 75%\n\nExplanation: Nonprofit B is a good match for the candidate because it aligns with the candidate's interest in healthcare and mental care. Furthermore, the candidate's skill in project management is needed by the nonprofit. Also, the location of Nonprofit B in New Jersey matches the candidate's location, and the time slot of 10am-1pm aligns with the candidate's availability. The match percentage is not 100% because the candidate's availability is limited to only one day of the week (Wednesday)."
+    }
+]
