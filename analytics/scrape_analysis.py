@@ -5,11 +5,12 @@ import seaborn as sns
 import streamlit as st
 
 # Load the JSON data
-with open('ngos_data.json', 'r') as file:
-    data = json.load(file)
+with open('C:/Users/pavan/Team-4/analytics/ngos_data.json', 'r') as json_file:
+    ngos_data = json.load(json_file)
+
 
 # Convert to DataFrame
-df = pd.DataFrame(data)
+df = pd.DataFrame(ngos_data)
 
 # Data preprocessing
 df['County Served'] = df['County Served'].str.split('; ')

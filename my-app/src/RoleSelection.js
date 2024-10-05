@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './roleselection.css'; // Import the CSS file
 
 function RoleSelection() {
   const navigate = useNavigate();
@@ -9,10 +10,12 @@ function RoleSelection() {
   };
 
   return (
-    <div>
+    <div className="role-selection-container">
       <h1>Select Your Role for Sign Up</h1>
-      <button onClick={() => handleRoleSelection('nonprofit')}>Non-Profit</button>
-      <button onClick={() => handleRoleSelection('leader')}>Leader</button>
+      <div className="button-container">
+        <button className="btn" onClick={() => handleRoleSelection('nonprofit')}>Non-Profit</button>
+        <button className="btn" onClick={() => handleRoleSelection('leader')}>Leader</button>
+      </div>
     </div>
   );
 }
