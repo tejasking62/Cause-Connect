@@ -1,271 +1,179 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // Use to get the user's info from login
+import './dashboard.css';
 
 function Dashboard() {
-  const location = useLocation();
-  const { email } = location.state || {}; // Extract email from login state
+  const [currentStep, setCurrentStep] = useState(0); // Track current step
+  const [answers, setAnswers] = useState({}); // Track all answers
 
-  // Define the state for form data
-  const [formData, setFormData] = useState({
-    "Causes or social issues candidate is most passionate about supporting": {
-      "Education and youth development": false,
-      "Healthcare and mental health": false,
-      "Environmental sustainability": false,
-      "Social justice and equity": false,
-      "Poverty alleviation and housing": false,
-      "Arts and culture": false
+  // Define all questions, including the 9th question
+  const questions = [
+    {
+      label: 'Which causes or social issues are you most passionate about supporting? (select up to 3)',
+      type: 'multi-select',
+      options: [
+        'Education and youth development',
+        'Healthcare and mental health',
+        'Environmental sustainability',
+        'Social justice and equity',
+        'Poverty alleviation and housing',
+        'Arts and culture',
+        'Open to supporting a variety of causes',
+        'Other (please specify)',
+      ],
     },
-    "Skills candidate is hoping to bring to the nonprofit": {
-      "Social media": false,
-      "Project management": false,
-      "Marketing": false,
-      "Technology": false,
-      "Human resources": false,
-      "Diversity, equity, inclusion": false,
-      "Other": false
+    {
+      label: 'What size of non-profit are you most interested in serving on?',
+      type: 'select',
+      options: [
+        'Small, local impact',
+        'Mid-sized, regional or national impact',
+        'Large, global reach',
+        'Open to any size as long as the mission aligns',
+      ],
     },
-    "Why are you interested in serving on a non-profit board?": '',
-    "Have you served in any leadership role for 6 months or more?": '',
-    "Share your experience with board service": '',
-    "What size of non-profit are you most interested in?": '',
-    "Who is your employer": '',
-    "What is your role/occupation": '',
-    "Age": '',
-    "Choose how you identify yourself": '',
-    "Race/ethnicity": '',
-    "Dates candidate is available": {
-      "Monday": false,
-      "Tuesday": false,
-      "Wednesday": false,
-      "Thursday": false,
-      "Friday": false
+    {
+      label: 'What skills are you hoping to bring to the nonprofit you will be serving?',
+      type: 'multi-select',
+      options: [
+        'Operations',
+        'Fundraising',
+        'Strategic planning',
+        'Social media',
+        'Project management',
+        'Marketing',
+        'Technology',
+        'Human resources',
+        'Diversity, equity, inclusion',
+        'Other',
+      ],
     },
-    "Times candidate is available": {
-      "10am-1pm": false,
-      "1pm-4pm": false,
-      "4pm-7pm": false
+    {
+      label: 'Have you served in any sort of leadership for 6 months or more?',
+      type: 'select',
+      options: ['Yes', 'No'],
     },
-    "Where are you located?": '',
-  });
+    {
+      label: 'What is your current occupation or role?',
+      type: 'text',
+      placeholder: 'Enter your current role',
+    },
+    {
+      label: 'What days are you available to volunteer?',
+      type: 'multi-select',
+      options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    },
+    {
+      label: 'What time of day are you available to volunteer?',
+      type: 'select',
+      options: ['Morning', 'Afternoon', 'Evening'],
+    },
+    {
+      label: 'What is your preferred method of communication?',
+      type: 'select',
+      options: ['Email', 'Phone', 'Text', 'In-person'],
+    },
+    {
+      label: 'Would you be interested in leading a team of volunteers?',
+      type: 'select',
+      options: ['Yes', 'No', 'Maybe'],
+    },
+  ];
 
-  const navigate = useNavigate();
+  // Handle input changes for both single-select and multi-select questions
+  const handleInputChange = (e, index, multiSelect = false) => {
+    const { name, value, checked } = e.target;
 
-  // Handle input changes (checkboxes and text)
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const [section, field] = name.split('.'); // For checkbox sections
-
-    if (type === 'checkbox') {
-      setFormData((prevData) => ({
-        ...prevData,
-        [section]: {
-          ...prevData[section],
-          [field]: checked,
-        },
-      }));
+    if (multiSelect) {
+      // Handle multiple selections for checkboxes
+      setAnswers((prev) => {
+        const selected = prev[name] || [];
+        if (checked) {
+          return { ...prev, [name]: [...selected, value] };
+        } else {
+          return { ...prev, [name]: selected.filter((item) => item !== value) };
+        }
+      });
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+      // Handle single selections
+      setAnswers({
+        ...answers,
+        [index]: value,
+      });
     }
   };
 
-  // Submit form data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Handle advancing to the next step or form submission
+  const handleNextStep = () => {
+    if (currentStep === questions.length - 1) {
+      // If it's the last question, handle form submission here
+      console.log('Form submitted:', answers); // Simulate form submission (without a popup)
+      // Implement actual form submission logic here (e.g., API call)
+    } else {
+      setCurrentStep(currentStep + 1); // Go to next question
+    }
+  };
 
-    // Debug: Log formData before submitting
-    console.log("Submitting form with data:", formData);
-
-    try {
-      const response = await fetch('http://localhost:5000/api/leader-submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, formData }),
-      });
-
-      // Debug: Check raw response
-      console.log("Raw response:", response);
-
-      if (!response.ok) {
-        throw new Error('Failed to submit the form.');
-      }
-
-      const result = await response.json();
-      console.log('Form submitted successfully:', result);
-
-      // Navigate to the results page and pass the result data
-      navigate('/results', { state: { matchResults: result } });
-    } catch (error) {
-      // Debug: Log error
-      console.error('Error submitting form:', error);
+  // Render each question based on its type (multi-select, select, or text input)
+  const renderQuestion = (question, index) => {
+    if (question.type === 'multi-select') {
+      return (
+        <div className="multi-select">
+          {question.options.map((option, i) => (
+            <div key={i}>
+              <input
+                type="checkbox"
+                id={`option-${index}-${i}`}
+                name={`multi-${index}`}
+                value={option}
+                checked={answers[`multi-${index}`]?.includes(option) || false}
+                onChange={(e) => handleInputChange(e, index, true)}
+              />
+              <label htmlFor={`option-${index}-${i}`}>{option}</label>
+            </div>
+          ))}
+        </div>
+      );
+    } else if (question.type === 'select') {
+      return (
+        <select
+          value={answers[index] || ''}
+          onChange={(e) => handleInputChange(e, index)}
+          className="input-select"
+        >
+          <option value="">Select an option</option>
+          {question.options.map((option, i) => (
+            <option key={i} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      );
+    } else if (question.type === 'text') {
+      return (
+        <input
+          type="text"
+          placeholder={question.placeholder || ''}
+          value={answers[index] || ''}
+          onChange={(e) => handleInputChange(e, index)}
+          className="input-text"
+        />
+      );
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Fill out the following information:</h1>
-
-      {/* Causes section */}
-      <h2>Causes or social issues you are passionate about</h2>
-      {Object.keys(formData["Causes or social issues candidate is most passionate about supporting"]).map((cause) => (
-        <div key={cause}>
-          <input
-            type="checkbox"
-            name={`Causes or social issues candidate is most passionate about supporting.${cause}`}
-            checked={formData["Causes or social issues candidate is most passionate about supporting"][cause]}
-            onChange={handleInputChange}
-          />
-          <label>{cause}</label>
-        </div>
-      ))}
-
-      {/* Skills section */}
-      <h2>Skills you want to bring to the nonprofit</h2>
-      {Object.keys(formData["Skills candidate is hoping to bring to the nonprofit"]).map((skill) => (
-        <div key={skill}>
-          <input
-            type="checkbox"
-            name={`Skills candidate is hoping to bring to the nonprofit.${skill}`}
-            checked={formData["Skills candidate is hoping to bring to the nonprofit"][skill]}
-            onChange={handleInputChange}
-          />
-          <label>{skill}</label>
-        </div>
-      ))}
-
-      {/* Text fields */}
-      <div>
-        <label>Why are you interested in serving on a non-profit board?</label>
-        <textarea
-          name="Why are you interested in serving on a non-profit board?"
-          value={formData["Why are you interested in serving on a non-profit board?"]}
-          onChange={handleInputChange}
-        />
+    <div className="container">
+      <div className="navigation-bar">
+        <a href="#" className="login-button">Login</a>
       </div>
-
-      <div>
-        <label>Have you served in any leadership role for 6 months or more?</label>
-        <input
-          type="text"
-          name="Have you served in any leadership role for 6 months or more?"
-          value={formData["Have you served in any leadership role for 6 months or more?"]}
-          onChange={handleInputChange}
-        />
+      <div className="step">
+        <h2>{questions[currentStep].label}</h2>
+        {renderQuestion(questions[currentStep], currentStep)}
+        <button onClick={handleNextStep} className="next-button">
+          {currentStep < questions.length - 1 ? 'Next' : 'Submit'}
+        </button>
       </div>
-
-      <div>
-        <label>Share your experience with board service</label>
-        <textarea
-          name="Share your experience with board service"
-          value={formData["Share your experience with board service"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>What size of non-profit are you most interested in?</label>
-        <input
-          type="text"
-          name="What size of non-profit are you most interested in?"
-          value={formData["What size of non-profit are you most interested in?"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Who is your employer?</label>
-        <input
-          type="text"
-          name="Who is your employer"
-          value={formData["Who is your employer"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>What is your role/occupation?</label>
-        <input
-          type="text"
-          name="What is your role/occupation"
-          value={formData["What is your role/occupation"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Age</label>
-        <input
-          type="text"
-          name="Age"
-          value={formData["Age"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Choose how you identify yourself</label>
-        <input
-          type="text"
-          name="Choose how you identify yourself"
-          value={formData["Choose how you identify yourself"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Race/ethnicity</label>
-        <input
-          type="text"
-          name="Race/ethnicity"
-          value={formData["Race/ethnicity"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      {/* Dates candidate is available */}
-      <h2>Dates you are available</h2>
-      {Object.keys(formData["Dates candidate is available"]).map((day) => (
-        <div key={day}>
-          <input
-            type="checkbox"
-            name={`Dates candidate is available.${day}`}
-            checked={formData["Dates candidate is available"][day]}
-            onChange={handleInputChange}
-          />
-          <label>{day}</label>
-        </div>
-      ))}
-
-      {/* Times candidate is available */}
-      <h2>Times you are available</h2>
-      {Object.keys(formData["Times candidate is available"]).map((time) => (
-        <div key={time}>
-          <input
-            type="checkbox"
-            name={`Times candidate is available.${time}`}
-            checked={formData["Times candidate is available"][time]}
-            onChange={handleInputChange}
-          />
-          <label>{time}</label>
-        </div>
-      ))}
-
-      <div>
-        <label>Where are you located?</label>
-        <input
-          type="text"
-          name="Where are you located?"
-          value={formData["Where are you located?"]}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <button type="submit">Submit</button>
-    </form>
+    </div>
   );
 }
 
