@@ -1,47 +1,289 @@
-/* Home.css */
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5;
+}
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1a73e8;
+  margin-right: 2rem;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-right: 1.5rem;
+  cursor: pointer;
+  color: #5f6368;
+}
+
+.navbar-item:hover {
+  color: #1a73e8;
+}
+
+.navbar-login {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.navbar-login:hover {
+  background-color: #1557b0;
+}
+
+/* Main Content Styles */
 .home-container {
-    display: flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5rem 5%;
+  flex-grow: 1;
+}
+
+.left-section {
+  max-width: 50%;
+}
+
+.left-section h1 {
+  font-size: 3rem;
+  color: #202124;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #1a73e8;
+  text-decoration: underline;
+}
+
+.nonprofit-section {
+  margin-top: 150px; /* Increased margin to move it even lower */
+  text-align: center;
+}
+
+.nonprofit-section h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Smaller button that doesn't stretch across */
+.nonprofit-button-small {
+  padding: 8px 16px;  /* Smaller padding for a smaller button */
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem; /* Smaller font size */
+  cursor: pointer;
+  margin-top: 10px;
+  width: fit-content;  /* Prevents the button from stretching */
+  display: inline-block;  /* Keeps the button from taking up full width */
+}
+
+.nonprofit-button-small:hover {
+  background-color: #0056b3;
+}
+
+/* Right section for login form */
+.subtitle {
+  font-size: 1.2rem;
+  color: #5f6368;
+  margin-bottom: 2rem;
+}
+
+.right-section {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.right-section h2 {
+  font-size: 1.5rem;
+  color: #202124;
+  margin-bottom: 1.5rem;
+}
+
+.linkedin-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0077b5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.linkedin-button:hover {
+  background-color: #006097;
+}
+
+.linkedin-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dadce0;
+}
+
+.divider span {
+  padding: 0 0.5rem;
+  color: #5f6368;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.login-button,
+.signup-button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.login-button {
+  background-color: #1a73e8;
+  color: white;
+}
+
+.login-button:hover {
+  background-color: #1557b0;
+}
+
+.signup-button {
+  background-color: white;
+  color: #1a73e8;
+  border: 1px solid #1a73e8;
+}
+
+.signup-button:hover {
+  background-color: #f1f3f4;
+}
+
+.forgot-password {
+  background: none;
+  border: none;
+  color: #1a73e8;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Footer Styles */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 5%;
+  background-color: #f8f9fa;
+  color: #5f6368;
+  font-size: 0.875rem;
+}
+
+.footer a {
+  color: #5f6368;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-container {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 2rem 5%;
   }
-  
-  h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    color: #333; /* Darker text for better readability */
+
+  .left-section,
+  .right-section {
+    max-width: 100%;
+    margin-bottom: 2rem;
   }
-  
-  p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    color: #555; /* Slightly lighter text */
+
+  .left-section h1 {
+    font-size: 2rem;
   }
-  
-  .btn {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    margin: 10px 0;
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+
+  .navbar-menu {
+    display: none;
   }
-  
-  .btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
-  }
-  
-  .btn:active {
-    transform: scale(0.95); /* Slightly shrink button when pressed */
-  }
-  
+}
