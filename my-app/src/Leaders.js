@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 
 function Leaders() {
@@ -34,15 +33,6 @@ function Leaders() {
         </div>
         <button type="submit">Submit</button>
       </form>
-=======
-import React from 'react';
-
-function Leaders() {
-  return (
-    <div>
-      <h1>Leaders Page</h1>
-      <p>Meet the leaders who are making an impact in the nonprofit space.</p>
->>>>>>> origin/tejas
     </div>
   );
 }
