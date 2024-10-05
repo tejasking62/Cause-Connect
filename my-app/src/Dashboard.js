@@ -4,7 +4,7 @@ import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
-  const { role } = location.state;
+  const role = location.state?.role || 'default'; // Retrieve the user's role from state
 
   return (
     <div className="dashboard-container">
@@ -97,7 +97,9 @@ const Questionnaire = ({ questions }) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       console.log('Form submitted with answers:', answers);
-      alert('Thank you for your submission!');
+  
+      // Redirect to submission success page
+      window.location.href = '/submission';
     }
   };
 

@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+new_venv
+
+=======
+env
+venv
+>>>>>>> d250f4a (created typeform.py for typeform data to be converted into the postgresql database)
+=======
 new_venv
 venv
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 .env
+>>>>>>> origin/main

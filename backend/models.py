@@ -29,4 +29,19 @@ class Nonprofits(db.Model):
 
     def __repr__(self):
         return f"NonprofitApplied('{self.title}', '{self.date_posted}')"
+
+# class Badge(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(100), nullable=False, unique=True)
+#     description = db.Column(db.Text, nullable=False)
+#     image_file = db.Column(db.String(100), nullable=False, default='default_badge.png')
+
+#     users = db.relationship('User', secondary='user_badge', back_populates='badges')
+
+#     user_badge = db.Table('user_badge',
+#         db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+#         db.Column('badge_id', db.Integer, db.ForeignKey('badge.id'), primary_key=True),
+#         db.Column('date_awarded', db.DateTime, nullable=False, default=datetime.utcnow)
+#     )
+
     
