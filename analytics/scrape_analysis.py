@@ -1,28 +1,79 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-import time
+import json
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import streamlit as st
 
-# Specify the path to your ChromeDriver
-chrome_driver_path = 'path_to_chromedriver'  # Replace this with the actual path to your chromedriver
+# Load the JSON data
+with open('ngos_data.json', 'r') as file:
+    data = json.load(file)
 
-# Create a Service object and pass it to the WebDriver
-service = Service(executable_path=chrome_driver_path)
-driver = webdriver.Chrome(service=service)
+# Convert to DataFrame
+df = pd.DataFrame(data)
 
-# Open the website
-driver.get("https://www.degives.org/search?q=a")
+# Data preprocessing
+df['County Served'] = df['County Served'].str.split('; ')
+df = df.explode('County Served')
+df = df.explode('Sector')
 
-# Allow the page some time to load
-time.sleep(5)  # Adjust this as needed
+# Streamlit app
+st.set_page_config(page_title="NGO Data Analysis Dashboard", layout="wide")
+st.title("NGO Data Analysis Dashboard")
 
-# Example: Find elements containing NGO names
-# Adjust class name based on the actual HTML structure
-ngos = driver.find_elements(By.CLASS_NAME, "card-title")
+# Sidebar for filtering
+st.sidebar.header("Filters")
+selected_county = st.sidebar.multiselect("Select County", df['County Served'].unique())
+selected_sector = st.sidebar.multiselect("Select Sector", df['Sector'].unique())
 
-# Print the scraped NGO names
-for ngo in ngos:
-    print(ngo.text)
+# Apply filters
+if selected_county:
+    df = df[df['County Served'].isin(selected_county)]
+if selected_sector:
+    df = df[df['Sector'].isin(selected_sector)]
 
-# Close the driver
-driver.quit()
+# Dashboard layout
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("NGOs by County")
+    county_counts = df['County Served'].value_counts()
+    fig, ax = plt.subplots(figsize=(10, 6))
+    county_counts.plot(kind='bar', ax=ax)
+    plt.title("Number of NGOs by County")
+    plt.xlabel("County")
+    plt.ylabel("Number of NGOs")
+    st.pyplot(fig)
+
+with col2:
+    st.subheader("Top 10 Sectors")
+    sector_counts = df['Sector'].value_counts().head(10)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sector_counts.plot(kind='bar', ax=ax)
+    plt.title("Top 10 NGO Sectors")
+    plt.xlabel("Sector")
+    plt.ylabel("Number of NGOs")
+    plt.xticks(rotation=45, ha='right')
+    st.pyplot(fig)
+
+st.subheader("NGO Office Locations")
+office_locations = [loc for locations in df['Office Locations'] for loc in locations]
+location_counts = pd.Series(office_locations).value_counts()
+fig, ax = plt.subplots(figsize=(12, 6))
+location_counts.plot(kind='bar', ax=ax)
+plt.title("NGO Office Locations")
+plt.xlabel("Location")
+plt.ylabel("Number of NGOs")
+plt.xticks(rotation=45, ha='right')
+st.pyplot(fig)
+
+st.subheader("Sector Distribution Heatmap")
+sector_county_pivot = pd.crosstab(df['Sector'], df['County Served'])
+fig, ax = plt.subplots(figsize=(12, 8))
+sns.heatmap(sector_county_pivot, annot=True, fmt='d', cmap='YlOrRd', ax=ax)
+plt.title("Sector Distribution Across Counties")
+plt.xlabel("County")
+plt.ylabel("Sector")
+st.pyplot(fig)
+
+st.subheader("NGO Details")
+st.dataframe(df[['NGO Name', 'County Served', 'Sector', 'Office Locations']])
