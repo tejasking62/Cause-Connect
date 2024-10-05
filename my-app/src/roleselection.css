@@ -1,0 +1,48 @@
+/* RoleSelection.css */
+.role-selection-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full viewport height */
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333; /* Darker text for better readability */
+    text-align: center; /* Center the heading */
+  }
+  
+  .button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;
+  }
+  
+  .btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 10px 0; /* Space between buttons */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    width: 200px; /* Fixed width for buttons */
+  }
+  
+  .btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+  
+  .btn:active {
+    transform: scale(0.95); /* Slightly shrink button when pressed */
+  }
+  
