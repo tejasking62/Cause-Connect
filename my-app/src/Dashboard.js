@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
 import './dashboard.css';
 
-
 function Dashboard() {
-  const location = useLocation();
-  const role = location.state?.role || 'default'; 
-
-  return (
-    <div>
-      <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
-      {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
-    </div>
-  );
-}
+  const [currentStep, setCurrentStep] = useState(0); // Track current step
+  const [answers, setAnswers] = useState({}); // Track all answers
 
   // Define all questions, including the 9th question
   const questions = [
