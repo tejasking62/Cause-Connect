@@ -4,8 +4,7 @@ import Home from './Home';
 import RoleSelection from './RoleSelection';
 import LoginSignupForm from './LoginSignupForm';
 import Dashboard from './Dashboard';
-
-
+import Results from './Results'; // Import Results component
 
 // Routes to different pages
 function App() {
