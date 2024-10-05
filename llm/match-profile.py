@@ -1,7 +1,8 @@
 import openai
+from sentence_transformers import SentenceTransformer, util
 
 openai.api_key =('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')
-
+model = SentenceTransformer('all-MiniLM-L6-v2')
 # Set your OpenAI API key
 
 # Candidate data with the new structure
@@ -189,66 +190,120 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
 
 # ... existing code ...
 
-# ... existing code ...
 
-def calculate_match_score(candidate, nonprofit):
-    score = 0
-    max_score = 100  # Maximum possible score is 100
-    reasoning = []
+# Function to generate a descriptive paragraph using GPT
+def generate_paragraph(prompt):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=150,
+        temperature=0.5
+    )
+    return response.choices[0].message['content'].strip()
 
-    # Define weights for each matching criterion
-    location_weight = 25
-    time_slot_weight = 25
-    skills_weight = 25
-    focus_areas_weight = 25
+# Function to create a candidate paragraph
+def create_candidate_paragraph(candidate):
+    prompt = f"""
+    Generate a concise candidate summary based on the following information:
+    The candidate is passionate about {format_nested_data(candidate['Causes or social issues candidate is most passionate about supporting'])}, with a strong commitment to these causes. 
+    They bring skills in {format_nested_data(candidate['Skills candidate is hoping to bring to the nonprofit'])}, which align well with their nonprofit interests. 
+    They prefer working with small, local impact organizations and are available on {', '.join([day for day in candidate['Dates candidate is available'] if candidate['Dates candidate is available'][day]])}. 
+    Create a summary that highlights their passions, skills, and availability in a professional tone.
+    """
+    return generate_paragraph(prompt)
+# Function to create a nonprofit paragraph
+def create_nonprofit_paragraph(nonprofit):
+    prompt = f"""
+    Generate a concise candidate summary based on the following information as someone who understands the mission of {nonprofit['What is your nonprofit’s name?']}, I know this organization is dedicated to {nonprofit['Under what category does your nonprofit fit best?']}. 
+    They are seeking individuals with skills in {nonprofit['What skills are you looking to recruit for?']} to enhance their impact. 
+    The nonprofit values contributions in {nonprofit['What kind of experience does your nonprofit board offer?']}, and prefers candidates available on {nonprofit['What days would you want a candidate to be available?']}. 
+    The organization is {nonprofit['What size would you consider your nonprofit?']} and is {nonprofit['Are you willing to take someone in without prior board service?']} to accepting individuals without prior board service.
+    """
+    return generate_paragraph(prompt)
 
-    # Check location match
-    if candidate['Where are you located?'] == nonprofit['Where is your nonprofit located?']:
-        score += location_weight
-        reasoning.append("Location matches.")
+# Function to compute similarity score using TF-IDF
+# def compute_similarity(candidate_paragraph, nonprofit_paragraph):
+#     documents = [candidate_paragraph, nonprofit_paragraph]
+#     tfidf_vectorizer = TfidfVectorizer()
+#     tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+#     similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])
+#     return similarity[0][0] * 100  # Convert to percentage
 
-    # Check time slot match
-    candidate_time_slots = set(candidate['Times candidate is available'].values())
-    nonprofit_time_slots = {nonprofit['What times would you want a candidate to be available?']}
-    if candidate_time_slots.intersection(nonprofit_time_slots):
-        score += time_slot_weight
-        reasoning.append("Time slots match.")
-
-    # Check skills match
-    candidate_skills = set(format_nested_data(candidate['Skills candidate is hoping to bring to the nonprofit']).split(', '))
-    nonprofit_skills = set(nonprofit['What skills are you looking to recruit for?'].split(', '))
-    skills_match_count = len(candidate_skills.intersection(nonprofit_skills))
-    if skills_match_count > 0:
-        score += (skills_match_count / len(nonprofit_skills)) * skills_weight
-        reasoning.append(f"Skills match: {', '.join(candidate_skills.intersection(nonprofit_skills))}.")
-
-    # Check focus areas match
-    candidate_interests = set(format_nested_data(candidate['Causes or social issues candidate is most passionate about supporting']).split(', '))
-    nonprofit_focus_areas = {nonprofit['Under what category does your nonprofit fit best?']}
-    focus_areas_match_count = len(candidate_interests.intersection(nonprofit_focus_areas))
-    if focus_areas_match_count > 0:
-        score += (focus_areas_match_count / len(nonprofit_focus_areas)) * focus_areas_weight
-        reasoning.append(f"Focus areas match: {', '.join(candidate_interests.intersection(nonprofit_focus_areas))}.")
-
-    return score, reasoning
-
-def rank_nonprofits_for_candidate(candidate, nonprofits):
-    ranked_nonprofits = []
+# def compute_similarity(candidate_paragraph, nonprofit_paragraph):
+#     # Encode the paragraphs to get their embeddings
+#     candidate_embedding = model.encode(candidate_paragraph, convert_to_tensor=True)
+#     nonprofit_embedding = model.encode(nonprofit_paragraph, convert_to_tensor=True)
     
-    for nonprofit in nonprofits:
-        score, reasoning = calculate_match_score(candidate, nonprofit)
-        ranked_nonprofits.append((nonprofit['What is your nonprofit\u2019s name?'], score, reasoning))
+#     # Compute cosine similarity between the embeddings
+#     similarity = util.pytorch_cos_sim(candidate_embedding, nonprofit_embedding)
     
-    # Sort nonprofits by score in descending order
-    ranked_nonprofits.sort(key=lambda x: x[1], reverse=True)
-    
-    return ranked_nonprofits
+#     return similarity.item() * 100  # Convert to percentage
 
-# Call the ranking function and print the results
+# Function to compute similarity score using GPT
+def compute_similarity_with_gpt(candidate_paragraph, nonprofit_paragraph):
+    prompt = f"""
+    You are an assistant that evaluates the compatibility between a candidate and a nonprofit organization based on their profiles.
+    
+    Candidate Profile:
+    {candidate_paragraph}
+    
+    Nonprofit Profile:
+    {nonprofit_paragraph}
+    
+    Based on the information provided, evaluate the compatibility between the candidate and the nonprofit. Provide a match percentage and a brief explanation of the reasoning behind the score.
+    """
+    
+    # Call OpenAI API
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are an assistant that evaluates compatibility between candidates and nonprofits."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=150,
+        temperature=0.5
+    )
+    
+    # Extract and return the response
+    return response.choices[0].message['content'].strip()
+
+# Store results
+results = []
+
+# Call the functions and store the results
 for candidate in candidates:
-    ranked_nonprofits = rank_nonprofits_for_candidate(candidate, nonprofit_list)
-    print(f"Ranked Nonprofits for {candidate['Enter your name']}:")
-    for nonprofit, score, reasoning in ranked_nonprofits:
-        print(f"{nonprofit}: {score:.2f}%")
-        if nonprofit == ranked_nonprofits[0][0]:  # Provide reasoning for the top match
-            print("Reasoning for top match:", " ".join(reasoning))
+    candidate_paragraph = create_candidate_paragraph(candidate)
+    
+    for nonprofit in nonprofit_list:
+        nonprofit_paragraph = create_nonprofit_paragraph(nonprofit)
+        similarity_score = compute_similarity_with_gpt(candidate_paragraph, nonprofit_paragraph)
+        
+        # Assuming the response is in the format "Match Percentage: X% - Explanation: ..."
+        match_percentage = float(similarity_score.split('%')[0].split(':')[-1].strip())
+        
+        results.append({
+            "candidate_name": candidate['Enter your name'],
+            "nonprofit_name": nonprofit['What is your nonprofit’s name?'],
+            "nonprofit_summary": nonprofit_paragraph,
+            "category": nonprofit['Under what category does your nonprofit fit best?'],
+            "location": nonprofit['Where is your nonprofit located?'],
+            "match_percentage": match_percentage,
+            "explanation": similarity_score
+        })
+
+
+# Convert results to JSON
+import json
+results_json = json.dumps(results, indent=4)
+
+# Print the JSON results
+print("Results JSON:\n", results_json)
+
+# Find the nonprofit with the highest match score for each candidate
+for candidate in candidates:
+    candidate_results = [result for result in results if result['candidate_name'] == candidate['Enter your name']]
+    best_match = max(candidate_results, key=lambda x: x['match_percentage'])
+    print(f"Best match for {candidate['Enter your name']}: {best_match['nonprofit_name']} with {best_match['match_percentage']}% match")

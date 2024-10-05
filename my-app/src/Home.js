@@ -49,16 +49,11 @@ function Home() {
         <button className="navbar-login" onClick={handleLogin}>Login</button>
       </nav>
 
-      <div className="home-container">
-        <div className="left-section">
-          <h1>Match with Your Cause to Support <span>INSTANTLY</span></h1>
-          <div className="nonprofit-section">
-            <h2>Are you a <strong>Nonprofit?</strong></h2>
-
-            <button className="nonprofit-button-small">Join our Database!</button>
-          </div>
-          <p className="subtitle">Connect with NGOs and make a difference in your community.</p>
-        </div>
+      <div className="home-container">
+        <div className="left-section">
+          <h1>Match with Your Cause to Support <span className="highlight">INSTANTLY</span></h1>
+          <p className="subtitle">Connect with NGOs and make a difference in your community.</p>
+        </div>
 
         <div className="right-section">
           <h2>Welcome to CauseConnect</h2>
