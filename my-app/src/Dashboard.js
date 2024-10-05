@@ -1,52 +1,166 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
   const { role } = location.state; // Retrieve the user's role from state
 
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
       {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
     </div>
   );
 }
+// Non-Profit Form with matching questions
+const NonProfitForm = () => {
+  const questions = [
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
+    {
+      label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
+      type: 'multi-select',
+      options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
+    },
+    {
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
+      type: 'select',
+      options: ['Field-based', 'Behind-the-scenes'],
+    },
+    {
+      label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?',
+      type: 'select',
+      options: ['Small, community-based', 'Larger, national/global'],
+    },
+  ];
 
-// Example form for Non-Profit users
-const NonProfitForm = () => (
-  <div>
-    <h2>Non-Profit Specific Questions</h2>
-    <form>
-      <div>
-        <label>Project Name: </label>
-        <input type="text" required />
-      </div>
-      <div>
-        <label>Funding Goal: </label>
-        <input type="number" required />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-);
+  return <Questionnaire questions={questions} />;
+};
 
-// Example form for Leader users
-const LeaderForm = () => (
-  <div>
-    <h2>Leader Specific Questions</h2>
-    <form>
+// Leader Form with matching questions
+const LeaderForm = () => {
+  const questions = [
+    { label: 'What causes/social issues are you most passionate about?', type: 'text' },
+    { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
+    {
+      label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
+      type: 'multi-select',
+      options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
+    },
+    {
+      label: 'Would you prefer a field-based position working directly with beneficiaries, or would you rather be involved in the behind-the-scenes work like program development, research, or administration?',
+      type: 'select',
+      options: ['Field-based', 'Behind-the-scenes'],
+    },
+    {
+      label: 'Do you prefer working for small, community-based nonprofits or larger, national/global organizations?',
+      type: 'select',
+      options: ['Small, community-based', 'Larger, national/global'],
+    },
+  ];
+
+  return <Questionnaire questions={questions} />;
+};
+
+// Questionnaire component to handle one-at-a-time questions with proper multi-select support
+const Questionnaire = ({ questions }) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+
+  const handleInputChange = (e) => {
+    setAnswers({
+      ...answers,
+      [currentQuestionIndex]: e.target.value,
+    });
+  };
+
+  const handleMultiSelectChange = (e, option) => {
+    const currentAnswers = answers[currentQuestionIndex] || [];
+    const selected = e.target.checked;
+
+    if (selected && currentAnswers.length < 3) {
+      setAnswers({
+        ...answers,
+        [currentQuestionIndex]: [...currentAnswers, option],
+      });
+    } else if (!selected) {
+      setAnswers({
+        ...answers,
+        [currentQuestionIndex]: currentAnswers.filter(item => item !== option),
+      });
+    }
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      // Handle form submission logic here, e.g., send answers to API
+      console.log('Form submitted with answers:', answers);
+      alert('Thank you for your submission!');
+    }
+  };
+
+  const renderMultiSelect = (options) => {
+    const currentAnswers = answers[currentQuestionIndex] || [];
+
+    return (
       <div>
-        <label>Leadership Style: </label>
-        <input type="text" required />
+        {options.map((option, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              id={option}
+              name={option}
+              value={option}
+              checked={currentAnswers.includes(option)}
+              onChange={(e) => handleMultiSelectChange(e, option)}
+            />
+            <label htmlFor={option}>{option}</label>
+          </div>
+        ))}
+        {currentAnswers.length >= 3 && (
+          <p style={{ color: 'red' }}>You can only select up to 3 options.</p>
+        )}
       </div>
+    );
+  };
+
+  return (
+    <form onSubmit={handleNext}>
       <div>
-        <label>Team Size: </label>
-        <input type="number" required />
+        <label>{questions[currentQuestionIndex].label}</label>
+        {questions[currentQuestionIndex].type === 'text' ? (
+          <input
+            type="text"
+            value={answers[currentQuestionIndex] || ''}
+            onChange={handleInputChange}
+            required
+          />
+        ) : questions[currentQuestionIndex].type === 'multi-select' ? (
+          renderMultiSelect(questions[currentQuestionIndex].options)
+        ) : (
+          <select
+            value={answers[currentQuestionIndex] || ''}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Select an option</option>
+            {questions[currentQuestionIndex].options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">
+        {currentQuestionIndex < questions.length - 1 ? 'Next' : 'Submit'}
+      </button>
     </form>
-  </div>
-);
+  );
+};
 
 export default Dashboard;
