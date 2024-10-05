@@ -5,6 +5,10 @@ import Nonprofits from './Nonprofits';
 import Leaders from './Leaders';  
 import LeadersQuestionDisplay from './LeadersQuestionDisplay'; // Import LeadersQuestionDisplay
 import NonprofitsQuestionDisplay from './NonprofitsQuestionDisplay'; // Import NonprofitsQuestionDisplay
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import RoleSelection from './RoleSelection';
+import LoginSignupForm from './LoginSignupForm';
 
 function App() {
   return (
@@ -26,6 +30,11 @@ function App() {
           <Route path="/nonprofits-questions" element={<NonprofitsQuestionDisplay />} /> {/* Route for Nonprofits Questions */}
         </Routes>
       </div>
+      <Routes>
+        <Route path="/" element={<Home />} />  {/* Home page */}
+        <Route path="/role-selection" element={<RoleSelection />} />  {/* Role selection page */}
+        <Route path="/login-signup" element={<LoginSignupForm />} />  {/* Login/Sign-up form page */}
+      </Routes>
     </Router>
   );
 }
