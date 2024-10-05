@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
   const { role } = location.state; // Retrieve the user's role from state
 
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>{role === 'nonprofit' ? 'Non-Profit Dashboard' : 'Leader Dashboard'}</h1>
       {role === 'nonprofit' ? <NonProfitForm /> : <LeaderForm />}
     </div>
   );
 }
-
 // Non-Profit Form with matching questions
 const NonProfitForm = () => {
   const questions = [
