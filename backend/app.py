@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
 from models import db, User, Nonprofit
 from sqlalchemy.exc import IntegrityError
-
+from llm.match import match_candidate_to_nonprofits
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
