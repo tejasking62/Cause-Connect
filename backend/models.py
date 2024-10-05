@@ -31,3 +31,16 @@ class Nonprofit(db.Model):
 
     def __repr__(self):
         return f"Nonprofit('{self.title}', '{self.date}')"
+    
+
+class Match(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    candidate_id = db.Column(db.Integer, nullable=False)
+    candidate_name = db.Column(db.String(100), nullable=False)
+    nonprofit_name = db.Column(db.String(100), nullable=False)
+    match_score = db.Column(db.Float)
+    match_explanation = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Match {self.candidate_name} - {self.nonprofit_name}>'
