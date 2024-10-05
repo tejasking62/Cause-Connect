@@ -20,7 +20,7 @@ const NonProfitForm = () => {
     { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
     {
       label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
-      type: 'select',
+      type: 'multi-select',
       options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
     {
@@ -45,7 +45,7 @@ const LeaderForm = () => {
     { label: 'What motivates you to work in the nonprofit sector?', type: 'text' },
     {
       label: 'What are your strongest professional skills that you can apply to a nonprofit role?',
-      type: 'select',
+      type: 'multi-select',
       options: ['Fundraising', 'Program Development', 'Marketing', 'Research', 'Advocacy'],
     },
     {
@@ -63,7 +63,7 @@ const LeaderForm = () => {
   return <Questionnaire questions={questions} />;
 };
 
-// Questionnaire component to handle one-at-a-time questions
+// Questionnaire component to handle one-at-a-time questions with multi-select support
 const Questionnaire = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -73,6 +73,18 @@ const Questionnaire = ({ questions }) => {
       ...answers,
       [currentQuestionIndex]: e.target.value,
     });
+  };
+
+  const handleMultiSelectChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
+    if (selectedOptions.length <= 3) {
+      setAnswers({
+        ...answers,
+        [currentQuestionIndex]: selectedOptions,
+      });
+    } else {
+      alert("You can only select up to 3 options.");
+    }
   };
 
   const handleNext = (e) => {
@@ -97,6 +109,19 @@ const Questionnaire = ({ questions }) => {
             onChange={handleInputChange}
             required
           />
+        ) : questions[currentQuestionIndex].type === 'multi-select' ? (
+          <select
+            multiple
+            value={answers[currentQuestionIndex] || []}
+            onChange={handleMultiSelectChange}
+            required
+          >
+            {questions[currentQuestionIndex].options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         ) : (
           <select
             value={answers[currentQuestionIndex] || ''}
