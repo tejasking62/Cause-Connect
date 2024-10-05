@@ -26,7 +26,7 @@ function Home() {
             <li className="navbar-item">Contact</li>
           </ul>
         </div>
-        <button className="navbar-login">Login</button>
+        <button onClick={handleLogin}className="navbar-login">Login</button>
       </nav>
 
       {/* Main Content */}

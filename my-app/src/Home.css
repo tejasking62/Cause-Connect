@@ -32,6 +32,7 @@
   text-decoration: underline;
 }
 
+/* Force the logo and menu to stay left and button to stay right */
 .navbar-left {
   display: flex;
   align-items: center;
@@ -87,6 +88,32 @@ body {
   text-decoration-thickness: 5px;
 }
 
+.nonprofit-section {
+  margin-top: 40px; /* Increased margin to add more space */
+  text-align: center; /* Center align the text and button */
+}
+
+.nonprofit-section p {
+  font-size: 18px;
+  color: #1C1C1C;
+}
+
+.database-btn {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 24px; /* Reduced padding to make the button smaller */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px; /* Added margin for spacing */
+  display: inline-block;
+}
+
+.database-btn:hover {
+  background-color: #0056b3;
+}
+
 /* Right section for login form */
 .right-section {
   background-color: #FFFFFF;
@@ -98,6 +125,12 @@ body {
 
 .right-section h2 {
   font-size: 24px;
+  margin-bottom: 10px;
+  color: #1C1C1C;
+}
+
+.right-section h3 {
+  font-size: 20px;
   margin-bottom: 20px;
   color: #1C1C1C;
 }
@@ -133,7 +166,7 @@ button, .linkedin-button {
 }
 
 .linkedin-button img {
-  width: 20px; /* Adjust the width as needed */
+  width: 20px; /* Set desired width */
   height: auto; /* Maintain aspect ratio */
   margin-right: 10px;
 }
