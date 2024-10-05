@@ -23,7 +23,7 @@ const NonProfitForm = () => {
     { label: 'What challenges do you think non-profits face today?', type: 'text' },
   ];
 
-  return <Questionnaire questions={questions} />;
+  return <Questionnaire questions={questions} 
 };
 
 // Leader Form with general questions
