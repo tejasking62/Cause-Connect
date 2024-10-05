@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function Nonprofits() {
+function LoginSignupForm() {
+  const location = useLocation();
+  const { action, role } = location.state;  // 'login' or 'signup' and 'nonprofit' or 'leader'
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add logic for login or signup, using backend API
-    console.log("Non-Profit logged in/signing up with", { email, password });
+    console.log(`${action} as a ${role} with`, { email, password });
+    // Add logic for login/signup via API
   };
 
   return (
     <div>
-      <h1>Non-Profit Login/Sign Up</h1>
+      <h1>{action === 'login' ? 'Login' : 'Sign Up'} as {role === 'nonprofit' ? 'Non-Profit' : 'Leader'}</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email: </label>
@@ -32,10 +36,10 @@ function Nonprofits() {
             required 
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">{action === 'login' ? 'Login' : 'Sign Up'}</button>
       </form>
     </div>
   );
 }
 
-export default Nonprofits;
+export default LoginSignupForm;
