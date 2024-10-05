@@ -57,6 +57,7 @@ function Home() {
 
             <button className="nonprofit-button-small">Join our Database!</button>
           </div>
+          <p className="subtitle">Connect with NGOs and make a difference in your community.</p>
         </div>
 
         <div className="right-section">

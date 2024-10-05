@@ -9,4 +9,8 @@ venv
 =======
 new_venv
 venv
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
+.env
 >>>>>>> origin/main
