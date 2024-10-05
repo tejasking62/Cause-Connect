@@ -88,5 +88,24 @@ def update_user_data(user_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
+@app.route('/match', methods=['POST'])
+def match_candidate():
+    # Get the candidate data from the request
+    candidate_data = request.json
+
+    # Ensure the candidate data is in the correct format
+    if not isinstance(candidate_data, dict):
+        return jsonify({"error": "Invalid candidate data format"}), 400
+
+    # Perform the matching
+    best_match = match_candidate_to_nonprofits(candidate_data, nonprofit_list)
+
+    # Return the result
+    return jsonify({
+        "candidate_name": candidate_data.get('Enter your name', 'Unknown'),
+        "best_match": best_match
+    })
+
 if __name__ == '__main__':
     app.run(debug=True)
