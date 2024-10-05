@@ -1,34 +1,5 @@
 import React, { useState } from 'react';
-
-const resultsJSON = [
-  {
-    candidate_name: "Alex",
-    nonprofit_name: "Nonprofit C",
-    nonprofit_summary: "Nonprofit C is a mission-driven organization focused on healthcare and mental care. They are currently seeking individuals skilled in social media to boost their impact. The organization highly values contributions in community outreach and prefers candidates who are available on Wednesdays. Nonprofit C operates on a medium scale with regional or national impact and is open to individuals without prior board service.",
-    category: "Healthcare and mental care",
-    location: "Other",
-    match_percentage: 60.0,
-    explanation: "Match Percentage: 60%\n\nExplanation: \n\nThe candidate and Nonprofit C share a common interest in mental health, which is a strong basis for their compatibility. The candidate's skills in marketing and technology could potentially be applied to the social media skills that Nonprofit C is seeking."
-  },
-  {
-    candidate_name: "Alex",
-    nonprofit_name: "Nonprofit B",
-    nonprofit_summary: "Nonprofit B is a globally reaching organization dedicated to healthcare and mental care. They are currently looking for individuals skilled in Project Management to amplify their impact. They value contributions in Strategy and Governance and prefer candidates who are available on Wednesdays. The organization is open to accepting individuals without prior board service.",
-    category: "Healthcare and mental care",
-    location: "New Jersey",
-    match_percentage: 60.0,
-    explanation: "Match Percentage: 60%\n\nExplanation: \n\nThe candidate and Nonprofit B share a common interest in Mental Health, which is a good starting point for compatibility. The candidate's skills in Project Management also align with what the nonprofit is currently seeking."
-  },
-  {
-    candidate_name: "Alex",
-    nonprofit_name: "Nonprofit A",
-    nonprofit_summary: "Nonprofit A is a mission-driven organization focused on education. They are currently seeking individuals skilled in project management to help enhance their local impact. The organization highly values contributions in community outreach and prefers candidates who are available on Mondays.",
-    category: "Education",
-    location: "Other",
-    match_percentage: 90.0,
-    explanation: "Match Percentage: 90%\n\nExplanation: \n\nThe candidate and Nonprofit A are highly compatible based on their shared interest in education and local impact. The candidate's skills in project management align perfectly with the nonprofit's current needs."
-  }
-];
+import resultsJSON from './gpt.json'; // Adjust the path as needed
 
 const MatchCard = ({ match }) => {
   const [isExpanded, setIsExpanded] = useState(false);
