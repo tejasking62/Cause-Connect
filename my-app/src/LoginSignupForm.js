@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import './login.css'; // Import the CSS file
+import './login.css'; // CSS file for styling
 
 function LoginSignupForm() {
   const location = useLocation();
@@ -12,7 +11,8 @@ function LoginSignupForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState(''); // Add name state for signup
 
-  const handleSubmit = (e) => {
+  // Submit form handler
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Retrieve stored user from local storage
@@ -48,15 +48,28 @@ function LoginSignupForm() {
 
   return (
     <div className="form-container">
-      <h1>{action === 'login' ? 'Login' : 'Sign Up'} as {action === 'signup' ? role.charAt(0).toUpperCase() + role.slice(1) : ''}</h1>
+      <h1>Sign Up as Leader</h1>
       <form onSubmit={handleSubmit} className="form">
+
+        {/* Name Field */}
+        <div className="form-group">
+          <label>Enter Your Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Email Field */}
         <div className="form-group">
           <label>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         {action === 'signup' && (
@@ -72,25 +85,26 @@ function LoginSignupForm() {
         )}
         <div className="form-group">
           <label>Password:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
-        {action === 'signup' && (
-          <div className="form-group">
-            <label>Confirm Password:</label>
-            <input 
-              type="password" 
-              value={confirmPassword} 
-              onChange={(e) => setConfirmPassword(e.target.value)} 
-              required 
-            />
-          </div>
-        )}
-        <button type="submit" className="btn">{action === 'login' ? 'Login' : 'Sign Up'}</button>
+
+        {/* Confirm Password Field */}
+        <div className="form-group">
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn">Sign Up</button>
       </form>
     </div>
   );

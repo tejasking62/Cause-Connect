@@ -88,6 +88,12 @@ body {
   text-decoration-thickness: 5px;
 }
 
+.subtitle {
+  font-size: 1.2rem;
+  color: #5f6368;
+  margin-bottom: 2rem;
+}
+
 .nonprofit-section {
   margin-top: 40px; /* Increased margin to add more space */
   text-align: center; /* Center align the text and button */
@@ -205,6 +211,14 @@ footer a:hover {
   text-decoration: none;
   color: #007BFF;
 }
+
+  .left-section h1 {
+    font-size: 2rem;
+  }
+
+  .navbar-menu {
+    display: none;
+  }
 
 .login-link a:hover {
   text-decoration: underline;
