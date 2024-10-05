@@ -27,3 +27,10 @@ def create_access_token(data: dict):
 
     encoded_jwt = create_access_token(identity=data)
     return encoded_jwt
+
+def get_current_user(db: Session = database.get_db()):
+    user_id = get_jwt_identity()  # Get the user ID from the JWT
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if user is None:
+        return None  # or raise an exception
+    return user
