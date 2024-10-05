@@ -14,6 +14,7 @@ function Dashboard() {
   );
 }
 
+  // Define all questions, including the 9th question
   const questions = [
     {
       label: 'Which causes or social issues are you most passionate about supporting? (select up to 3)',
@@ -30,51 +31,6 @@ function Dashboard() {
       ],
     },
     {
-      label: 'Why are you interested in serving on a non-profit board?',
-      type: 'select',
-      options: [
-        'I want to contribute my leadership skills to make a positive community impact.',
-        'I am passionate about advocating for causes that align with my personal values.',
-        'I enjoy networking and collaborating with others to drive meaningful change.',
-        'I want to use my experience in strategy and governance to support organizational growth.',
-        'I see board service as a way to develop new skills and gain leadership experience.',
-        'Other (please specify)',
-      ],
-    },
-    {
-      label: 'What skills are you hoping to bring to the nonprofit you will be serving?',
-      type: 'multi-select',
-      options: [
-        'Operations', 'Fundraising', 'Strategic planning', 'Social media', 'Project management',
-        'Marketing', 'Technology', 'Human resources', 'Diversity, equity, inclusion', 'Other'
-      ],
-    },
-    {
-      label: 'Please drag and rank the following skills based on your strength in each area (from strongest to weakest)',
-      type: 'ranking',
-      options: [
-        'Advocating for a cause',
-        'Having tough conversations',
-        'Strategic planning',
-        'Reviewing a budget and/or profit and loss statement',
-        'Fundraising',
-      ],
-    },
-    {
-      label: 'Have you served in any sort of leadership for 6 months or more?',
-      type: 'select',
-      options: ['Yes', 'No'],
-    },
-    {
-      label: 'Share your experience with board service',
-      type: 'select',
-      options: [
-        'I’ve never been on a board',
-        'I have previously held a position on a board of directors',
-        'I’m currently on a board and looking to join another',
-      ],
-    },
-    {
       label: 'What size of non-profit are you most interested in serving on?',
       type: 'select',
       options: [
@@ -85,66 +41,106 @@ function Dashboard() {
       ],
     },
     {
-      label: 'Logistical Information',
-      type: 'logistics',
-      fields: [
-        { label: 'Email', type: 'text', placeholder: 'Enter your email' },
-        { label: 'Organization/employer', type: 'text', placeholder: 'Enter your organization' },
-        { label: 'Occupation/role', type: 'text', placeholder: 'Enter your role' },
-        {
-          label: 'Age', type: 'select', options: [
-            '18-24', '25-34', '35-49', '50-64', '65+'
-          ]
-        },
-        {
-          label: 'How do you identify yourself?', type: 'select', options: [
-            'Woman', 'Man', 'Transgender', 'Non-binary/non-conforming', 'Prefer not to respond'
-          ]
-        },
-        {
-          label: 'Race/ethnicity', type: 'select', options: [
-            'American Indian or Alaska Native', 'Asian', 'Black or African American',
-            'Native Hawaiian or other Pacific Islander', 'White', 'Two or more races', 'Other'
-          ]
-        },
-        {
-          label: 'Where are you located?', type: 'select', options: [
-            'New Castle county', 'Kent county', 'Sussex county', 'Maryland', 'New Jersey', 'Pennsylvania', 'Other'
-          ]
-        },
-        {
-          label: 'What days are you available?', type: 'multi-select', options: ['M-F']
-        },
-        {
-          label: 'What time are you available?', type: 'multi-select', options: ['10am-1pm', '1pm-4pm', '4pm-7pm']
-        },
-      ]
-    }
+      label: 'What skills are you hoping to bring to the nonprofit you will be serving?',
+      type: 'multi-select',
+      options: [
+        'Operations',
+        'Fundraising',
+        'Strategic planning',
+        'Social media',
+        'Project management',
+        'Marketing',
+        'Technology',
+        'Human resources',
+        'Diversity, equity, inclusion',
+        'Other',
+      ],
+    },
+    {
+      label: 'Have you served in any sort of leadership for 6 months or more?',
+      type: 'select',
+      options: ['Yes', 'No'],
+    },
+    {
+      label: 'What is your current occupation or role?',
+      type: 'text',
+      placeholder: 'Enter your current role',
+    },
+    {
+      label: 'What days are you available to volunteer?',
+      type: 'multi-select',
+      options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    },
+    {
+      label: 'What time of day are you available to volunteer?',
+      type: 'select',
+      options: ['Morning', 'Afternoon', 'Evening'],
+    },
+    {
+      label: 'What is your preferred method of communication?',
+      type: 'select',
+      options: ['Email', 'Phone', 'Text', 'In-person'],
+    },
+    {
+      label: 'Would you be interested in leading a team of volunteers?',
+      type: 'select',
+      options: ['Yes', 'No', 'Maybe'],
+    },
   ];
 
-  const handleInputChange = (e, index) => {
-    setAnswers({
-      ...answers,
-      [index]: e.target.value,
-    });
-  };
+  // Handle input changes for both single-select and multi-select questions
+  const handleInputChange = (e, index, multiSelect = false) => {
+    const { name, value, checked } = e.target;
 
-  const handleNextStep = () => {
-    if (currentStep < questions.length - 1) {
-      setCurrentStep(currentStep + 1);
+    if (multiSelect) {
+      // Handle multiple selections for checkboxes
+      setAnswers((prev) => {
+        const selected = prev[name] || [];
+        if (checked) {
+          return { ...prev, [name]: [...selected, value] };
+        } else {
+          return { ...prev, [name]: selected.filter((item) => item !== value) };
+        }
+      });
+    } else {
+      // Handle single selections
+      setAnswers({
+        ...answers,
+        [index]: value,
+      });
     }
   };
 
+  // Handle advancing to the next step or form submission
+  const handleNextStep = () => {
+    if (currentStep === questions.length - 1) {
+      // If it's the last question, handle form submission here
+      console.log('Form submitted:', answers); // Simulate form submission (without a popup)
+      // Implement actual form submission logic here (e.g., API call)
+    } else {
+      setCurrentStep(currentStep + 1); // Go to next question
+    }
+  };
+
+  // Render each question based on its type (multi-select, select, or text input)
   const renderQuestion = (question, index) => {
-    if (question.type === 'text') {
+    if (question.type === 'multi-select') {
       return (
-        <input
-          type="text"
-          placeholder={question.placeholder}
-          value={answers[index] || ''}
-          onChange={(e) => handleInputChange(e, index)}
-          className="input-text"
-        />
+        <div className="multi-select">
+          {question.options.map((option, i) => (
+            <div key={i}>
+              <input
+                type="checkbox"
+                id={`option-${index}-${i}`}
+                name={`multi-${index}`}
+                value={option}
+                checked={answers[`multi-${index}`]?.includes(option) || false}
+                onChange={(e) => handleInputChange(e, index, true)}
+              />
+              <label htmlFor={`option-${index}-${i}`}>{option}</label>
+            </div>
+          ))}
+        </div>
       );
     } else if (question.type === 'select') {
       return (
@@ -155,29 +151,23 @@ function Dashboard() {
         >
           <option value="">Select an option</option>
           {question.options.map((option, i) => (
-            <option key={i} value={option}>{option}</option>
+            <option key={i} value={option}>
+              {option}
+            </option>
           ))}
         </select>
       );
-    } else if (question.type === 'multi-select') {
+    } else if (question.type === 'text') {
       return (
-        <div className="multi-select">
-          {question.options.map((option, i) => (
-            <div key={i}>
-              <input
-                type="checkbox"
-                id={option}
-                value={option}
-                checked={answers[index]?.includes(option) || false}
-                onChange={(e) => handleInputChange(e, index)}
-              />
-              <label htmlFor={option}>{option}</label>
-            </div>
-          ))}
-        </div>
+        <input
+          type="text"
+          placeholder={question.placeholder || ''}
+          value={answers[index] || ''}
+          onChange={(e) => handleInputChange(e, index)}
+          className="input-text"
+        />
       );
     }
-    // Add handling for 'ranking' and 'logistics' if needed
   };
 
   return (

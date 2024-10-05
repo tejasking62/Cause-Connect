@@ -51,6 +51,17 @@ html, body {
     margin-bottom: 20px;
   }
   
+  /* Increase size of dropdown select */
+  input[type="text"], select {
+    padding: 15px;
+    font-size: 1.2em;  /* Increase font size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 100%;  /* Full width for better spacing */
+    max-width: 400px;
+  }
+  
   /* Centered container for question options */
   .multi-select, .input-select {
     display: flex;
