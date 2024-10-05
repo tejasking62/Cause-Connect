@@ -145,5 +145,56 @@
       "4pm-7pm": false
     },
     "Where are you located?": "DC"
+  },
+  {
+    "name": "gg",
+    "email": "gg@gmail.com",
+    "password": "123",
+    "role": "leader"
+  },
+  {
+    "name": "aa",
+    "email": "aa@gmail.com",
+    "password": "123",
+    "role": "leader",
+    "Causes or social issues candidate is most passionate about supporting": {
+      "Education and youth development": false,
+      "Healthcare and mental health": false,
+      "Environmental sustainability": false,
+      "Social justice and equity": false,
+      "Poverty alleviation and housing": false,
+      "Arts and culture": false
+    },
+    "Skills candidate is hoping to bring to the nonprofit": {
+      "Social media": false,
+      "Project management": false,
+      "Marketing": false,
+      "Technology": false,
+      "Human resources": false,
+      "Diversity, equity, inclusion": false,
+      "Other": false
+    },
+    "Why are you interested in serving on a non-profit board?": "",
+    "Have you served in any leadership role for 6 months or more?": "",
+    "Share your experience with board service": "",
+    "What size of non-profit are you most interested in?": "",
+    "Who is your employer": "",
+    "What is your role/occupation": "",
+    "Age": "",
+    "Choose how you identify yourself": "",
+    "Race/ethnicity": "",
+    "Dates candidate is available": {
+      "Monday": false,
+      "Tuesday": false,
+      "Wednesday": false,
+      "Thursday": false,
+      "Friday": false
+    },
+    "Times candidate is available": {
+      "10am-1pm": false,
+      "1pm-4pm": false,
+      "4pm-7pm": false
+    },
+    "Where are you located?": ""
   }
 ]
