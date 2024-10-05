@@ -1,7 +1,8 @@
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=('sk-proj-OsP--RPm2UHOwGW6oQANsgt6SEA'))
 from sentence_transformers import SentenceTransformer, util
 
-openai.api_key =('sk-proj-OsP--RPm2UHOwGW6oQANsgt6SEA')
 model = SentenceTransformer('all-MiniLM-L6-v2')
 # Set your OpenAI API key
 
@@ -145,7 +146,7 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
     candidate_availability = candidate['Dates candidate is available']
     candidate_time_slots = candidate['Times candidate is available']
     candidate_location = candidate['Where are you located?']
-    
+
     # Create the prompt
     prompt = f"""
     You are an assistant that matches candidates to nonprofit organizations.
@@ -160,7 +161,7 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
     
     Here are the nonprofit organizations:
     """
-    
+
     for nonprofit in nonprofits:
         prompt += f"""
         Nonprofit Name: {nonprofit['name']}
@@ -169,40 +170,36 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
         Location: {nonprofit['location']}
         Time Slots: {', '.join(nonprofit['time_slots'])}
         """
-    
+
     prompt += """
     Based on the candidate's skills, interests, availability, and location, suggest the best matching nonprofit(s) for the candidate and explain why.
     """
-    
+
     # Call OpenAI API
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are an assistant that matches candidates to nonprofit organizations."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=500,
-        temperature=0.5
-    )
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are an assistant that matches candidates to nonprofit organizations."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=500,
+    temperature=0.5)
 
     # Extract and return the response
-    return response.choices[0].message['content'].strip()
+    return response.choices[0].message.content.strip()
 
 # ... existing code ...
 
 
 # Function to generate a descriptive paragraph using GPT
 def generate_paragraph(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=150,
-        temperature=0.5
-    )
-    return response.choices[0].message['content'].strip()
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=150,
+    temperature=0.5)
+    return response.choices[0].message.content.strip()
 
 # Function to create a candidate paragraph
 def create_candidate_paragraph(candidate):
@@ -236,10 +233,10 @@ def create_nonprofit_paragraph(nonprofit):
 #     # Encode the paragraphs to get their embeddings
 #     candidate_embedding = model.encode(candidate_paragraph, convert_to_tensor=True)
 #     nonprofit_embedding = model.encode(nonprofit_paragraph, convert_to_tensor=True)
-    
+
 #     # Compute cosine similarity between the embeddings
 #     similarity = util.pytorch_cos_sim(candidate_embedding, nonprofit_embedding)
-    
+
 #     return similarity.item() * 100  # Convert to percentage
 
 # Function to compute similarity score using GPT
@@ -255,20 +252,18 @@ def compute_similarity_with_gpt(candidate_paragraph, nonprofit_paragraph):
     
     Based on the information provided, evaluate the compatibility between the candidate and the nonprofit. Provide a match percentage and a brief explanation of the reasoning behind the score.
     """
-    
+
     # Call OpenAI API
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are an assistant that evaluates compatibility between candidates and nonprofits."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=150,
-        temperature=0.5
-    )
-    
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are an assistant that evaluates compatibility between candidates and nonprofits."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=150,
+    temperature=0.5)
+
     # Extract and return the response
-    return response.choices[0].message['content'].strip()
+    return response.choices[0].message.content.strip()
 
 # Store results
 results = []
@@ -276,14 +271,14 @@ results = []
 # Call the functions and store the results
 for candidate in candidates:
     candidate_paragraph = create_candidate_paragraph(candidate)
-    
+
     for nonprofit in nonprofit_list:
         nonprofit_paragraph = create_nonprofit_paragraph(nonprofit)
         similarity_score = compute_similarity_with_gpt(candidate_paragraph, nonprofit_paragraph)
-        
+
         # Assuming the response is in the format "Match Percentage: X% - Explanation: ..."
         match_percentage = float(similarity_score.split('%')[0].split(':')[-1].strip())
-        
+
         results.append({
             "candidate_name": candidate['Enter your name'],
             "nonprofit_name": nonprofit['What is your nonprofit’s name?'],

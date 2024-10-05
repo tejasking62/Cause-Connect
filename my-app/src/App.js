@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import RoleSelection from './RoleSelection';
 import LoginSignupForm from './LoginSignupForm';
-import Dashboard from './Dashboard'; // Import the Dashboard component
+import Dashboard from './Dashboard';
 
+// Routes to different pages
 function App() {
   return (
     <Router>

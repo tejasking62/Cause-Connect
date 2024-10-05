@@ -1,6 +1,7 @@
-import openai
+from openai import OpenAI
 
-openai.api_key =('')
+client = OpenAI(api_key=(''))
+
 
 # Set your OpenAI API key
 
@@ -89,7 +90,7 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
     candidate_availability = candidate['Dates candidate is available']
     candidate_time_slots = candidate['Times candidate is available']
     candidate_location = candidate['Where are you located?']
-    
+
     # Create the prompt
     prompt = f"""
     You are an assistant that matches candidates to nonprofit organizations.
@@ -104,7 +105,7 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
     
     Here are the nonprofit organizations:
     """
-    
+
     for nonprofit in nonprofits:
         prompt += f"""
         Nonprofit Name: {nonprofit['name']}
@@ -113,24 +114,22 @@ def match_candidate_to_nonprofits(candidate, nonprofits):
         Location: {nonprofit['location']}
         Time Slots: {', '.join(nonprofit['time_slots'])}
         """
-    
+
     prompt += """
     Based on the candidate's skills, interests, availability, and location, suggest the best matching nonprofit(s) for the candidate and explain why.
     """
-    
+
     # Call OpenAI API
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are an assistant that matches candidates to nonprofit organizations."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=500,
-        temperature=0.5
-    )
+    response = client.chat.completions.create(model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are an assistant that matches candidates to nonprofit organizations."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=500,
+    temperature=0.5)
 
     # Extract and return the response
-    return response.choices[0].message['content'].strip()
+    return response.choices[0].message.content.strip()
 
 # Call the matching function and print the result
 for candidate in candidates:
