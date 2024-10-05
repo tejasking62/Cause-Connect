@@ -4,11 +4,7 @@ import './dashboard.css'; // Import the CSS file
 
 function Dashboard() {
   const location = useLocation();
-<<<<<<< HEAD
   const role = location.state?.role || 'default'; // Retrieve the user's role from state
-=======
-  const { role } = location.state; 
->>>>>>> tejas
 
   return (
     <div className="dashboard-container">
