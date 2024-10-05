@@ -97,9 +97,10 @@ const Questionnaire = ({ questions }) => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Handle form submission logic here, e.g., send answers to API
       console.log('Form submitted with answers:', answers);
-      alert('Thank you for your submission!');
+  
+      // Redirect to submission success page
+      window.location.href = '/submission';
     }
   };
 
