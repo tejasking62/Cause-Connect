@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 function Dashboard() {
   const location = useLocation();
-  const { role } = location.state; // Retrieve the user's role from state
+  const { role } = location.state; 
 
   return (
     <div>
@@ -13,7 +13,7 @@ function Dashboard() {
   );
 }
 
-// Non-Profit Form with general questions
+
 const NonProfitForm = () => {
   const questions = [
     { label: 'What motivates you to work in the non-profit sector?', type: 'text' },
@@ -56,7 +56,6 @@ const Questionnaire = ({ questions }) => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Handle form submission logic here, e.g., send answers to API
       console.log('Form submitted with answers:', answers);
       alert('Thank you for your submission!');
     }
