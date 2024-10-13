@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI(api_key=('sk-proj-OsP--RPm2UHOwGW6oQANsgt6SEA'))
+client = OpenAI(api_key=('fake-api-key'))
 
 
 # Set your OpenAI API key
